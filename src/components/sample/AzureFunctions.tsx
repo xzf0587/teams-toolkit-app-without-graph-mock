@@ -1,13 +1,11 @@
 import { useContext, useState } from "react";
-import { Button, Spinner } from "@fluentui/react-components";
-import { useData } from "@microsoft/teamsfx-react";
+import { Button } from "@fluentui/react-components";
 import * as axios from "axios";
 import { BearerTokenAuthProvider, createApiClient, TeamsUserCredential } from "@microsoft/teamsfx";
 import { TeamsFxContext } from "../Context";
 import config from "./lib/config";
 
 const functionName = config.apiName || "myFunc";
-
 async function callFunction(teamsUserCredential: TeamsUserCredential) {
   try {
     const apiBaseUrl = config.apiEndpoint + "/api/";
@@ -45,64 +43,50 @@ async function callFunction(teamsUserCredential: TeamsUserCredential) {
   }
 }
 
-export function AzureFunctions(props: { codePath?: string; docsUrl?: string }) {
-  const [needConsent, setNeedConsent] = useState(false);
+export function AzureFunctions(props: { codePath?: string; docsUrl?: string; }) {
   const { codePath, docsUrl } = {
     codePath: `api/${functionName}/index.ts`,
     docsUrl: "https://aka.ms/teamsfx-azure-functions",
     ...props,
   };
   const teamsUserCredential = useContext(TeamsFxContext).teamsUserCredential;
-  const { loading, data, error, reload } = useData(async () => {
-    if (!teamsUserCredential) {
-      throw new Error("TeamsFx SDK is not initialized.");
-    }
-    if (needConsent) {
-      await teamsUserCredential!.login(["User.Read"]);
-      setNeedConsent(false);
-    }
-    try {
-      const functionRes = await callFunction(teamsUserCredential);
-      return functionRes;
-    } catch (error: any) {
-      if (error.message.includes("The application may not be authorized.")) {
-        setNeedConsent(true);
-      }
-    }
+  const [res, setRes] = useState({
+    data: "Click to Call GraphApi from Azure Function" as any,
+    error: undefined,
   });
+  const clickHandler = async () => {
+    try {
+      if (!teamsUserCredential) {
+        throw new Error("TeamsFx SDK is not initialized.");
+      }
+      const functionRes = await callFunction(teamsUserCredential);
+      setRes({
+        data: functionRes,
+        error: undefined,
+      });
+    } catch (error: any) {
+      setRes({
+        data: undefined,
+        error: error.message,
+      });
+    }
+  };
+
   return (
     <div>
-      <h2>Call your Azure Function</h2>
-      <p>
-        An Azure Functions app is running. Authorize this app and click below to call it for a
-        response:
-      </p>
-      {!loading && (
-        <Button appearance="primary" disabled={loading} onClick={reload}>
-          Authorize and call Azure Function
+      <h2>Call GraphApi from Azure Function</h2>
+      <pre>
+      {`Call Backend API from frontend using: const apiClient = createApiClient().\n`}
+      {`Hook the grapClient creation by adding proxy middleware:\n`}
+      <code>  ProxyMiddleware("http://LOCAL_PROXY_ADDRESS")</code>
+      </pre>
+      {(
+        <Button appearance="primary" onClick={clickHandler}>
+          Call Azure Function
         </Button>
       )}
-      {loading && (
-        <pre className="fixed">
-          <Spinner />
-        </pre>
-      )}
-      {!loading && !!data && !error && <pre className="fixed">{JSON.stringify(data, null, 2)}</pre>}
-      {!loading && !data && !error && <pre className="fixed"></pre>}
-      {!loading && !!error && <div className="error fixed">{(error as any).toString()}</div>}
-      <h4>How to edit the Azure Function</h4>
-      <p>
-        See the code in <code>{codePath}</code> to add your business logic.
-      </p>
-      {!!docsUrl && (
-        <p>
-          For more information, see the{" "}
-          <a href={docsUrl} target="_blank" rel="noreferrer">
-            docs
-          </a>
-          .
-        </p>
-      )}
+      {res.data && <pre className="fixed">{JSON.stringify(res.data, null, 2)}</pre>}
+      {!!res.error && <div className="error fixed">{(res.error as any).toString()}</div>}
     </div>
   );
 }

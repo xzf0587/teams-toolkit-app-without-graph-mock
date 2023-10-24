@@ -11,3 +11,20 @@ export const TeamsFxContext = createContext<{
   themeString: "",
   teamsUserCredential: undefined,
 });
+
+// var old = TeamsUserCredential.prototype.getToken;
+// TeamsUserCredential.prototype.getToken = async (scopes: string | string[], options?: any) => {
+//   // hook before call
+//   let scopesArray = typeof scopes === "string" ? scopes.split(" ") : scopes;
+//   scopesArray = scopesArray.map((scope) => {
+//     if (scope.includes("https://graph.microsoft.com")) {
+//       return "https://graph.microsoft.com/.default";
+//     }
+//     else {
+//       return scope;
+//     }
+//   })
+
+//   return await old(scopesArray, options);
+//   // hook after call
+// };

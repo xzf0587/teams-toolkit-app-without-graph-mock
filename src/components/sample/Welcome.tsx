@@ -15,8 +15,10 @@ import { useData } from "@microsoft/teamsfx-react";
 import { Deploy } from "./Deploy";
 import { Publish } from "./Publish";
 import { TeamsFxContext } from "../Context";
+import { GraphApiCall } from "./GraphApiCall";
+import { Login } from "./Login";
 
-export function Welcome(props: { showFunction?: boolean; environment?: string }) {
+export function Welcome(props: { showFunction?: boolean; environment?: string; }) {
   const { showFunction, environment } = {
     showFunction: true,
     environment: window.location.hostname === "localhost" ? "local" : "azure",
@@ -51,31 +53,30 @@ export function Welcome(props: { showFunction?: boolean; environment?: string })
         <div className="tabList">
           <TabList selectedValue={selectedValue} onTabSelect={onTabSelect}>
             <Tab id="Local" value="local">
-              1. Build your app locally
+              1. Login
             </Tab>
             <Tab id="Azure" value="azure">
-              2. Provision and Deploy to the Cloud
+              2. Call Graph API from browser
             </Tab>
             <Tab id="Publish" value="publish">
-              3. Publish to Teams
+              3. Call Graph API from Azure Function
             </Tab>
           </TabList>
           <div>
             {selectedValue === "local" && (
               <div>
-                <EditCode showFunction={showFunction} />
-                <CurrentUser userName={userName} />
-                {showFunction && <AzureFunctions />}
+                {/* <CurrentUser userName={userName} /> */}
+                {<Login />}
               </div>
             )}
             {selectedValue === "azure" && (
               <div>
-                <Deploy />
+                {<GraphApiCall />}
               </div>
             )}
             {selectedValue === "publish" && (
               <div>
-                <Publish />
+                {<AzureFunctions />}
               </div>
             )}
           </div>

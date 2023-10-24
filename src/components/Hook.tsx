@@ -1,0 +1,24 @@
+import { TeamsUserCredential } from "@microsoft/teamsfx";
+import { AccessToken } from "@azure/identity";
+import { Client } from "@microsoft/microsoft-graph-client";
+
+// hook getToken to return a mocked access token. The token can not be used to call real graph api. To go through the flow of graph api call, please handle th.
+TeamsUserCredential.prototype.getToken = async (scopes: string | string[], options?: any) => {
+  const accessToken: AccessToken = {
+    token: "eyJ0eXAiOiJKV1QiLCJub25jZSI6InpyczlqQzBtUmRGRjhPWDBpbmwtbjBmaFNHWldKZmE5SU1tQXM0UGNXY00iLCJhbGciOiJSUzI1NiIsIng1dCI6IjlHbW55RlBraGMzaE91UjIybXZTdmduTG83WSIsImtpZCI6IjlHbW55RlBraGMzaE91UjIybXZTdmduTG83WSJ9.eyJhdWQiOiJodHRwczovL2dyYXBoLm1pY3Jvc29mdC5jb20iLCJpc3MiOiJodHRwczovL3N0cy53aW5kb3dzLm5ldC81ZWU4ZjBiNS04YmRlLTQzMWItOWNkNS0wZDI3MTE0YmYwNmQvIiwiaWF0IjoxNjk2ODI2MzgwLCJuYmYiOjE2OTY4MjYzODAsImV4cCI6MTY5NjgzMDMzOSwiYWNjdCI6MCwiYWNyIjoiMSIsImFpbyI6IkFUUUF5LzhVQUFBQWVIdGx6SGlzaHBrTm5aVFR6NzBCZ1AycnM2cW54OUFjMU1ubFRqVUhSZkpNSVdwRFZHTUlxRlNqTzRZOHErVGwiLCJhbXIiOlsicHdkIiwicnNhIl0sImFwcF9kaXNwbGF5bmFtZSI6ImhlbGxvLXdvcmxkLXRhYi13aXRoLWJhY2tlbmQtYWFkIiwiYXBwaWQiOiI1M2NkYzhlYy01ZmY5LTQ3MWEtYmRmOS1hNTI0ZjEzZjY1NTIiLCJhcHBpZGFjciI6IjAiLCJkZXZpY2VpZCI6IjQwYzcwNTQ4LTMyOWYtNGM1NC04MmU3LTllZjA0MmE3MmQ2NSIsImZhbWlseV9uYW1lIjoieHYiLCJnaXZlbl9uYW1lIjoia25pZmUiLCJpZHR5cCI6InVzZXIiLCJpcGFkZHIiOiIxNjcuMjIwLjI1NS4xIiwibmFtZSI6ImtuaWZlIHh2Iiwib2lkIjoiYmQxZTViZDEtNGFlMC00OTcxLWE0M2UtNGI5YWJhY2U3N2IzIiwicGxhdGYiOiIzIiwicHVpZCI6IjEwMDMyMDAwRUNBMDREMTMiLCJyaCI6IjAuQVhZQXRmRG9YdDZMRzBPYzFRMG5FVXZ3YlFNQUFBQUFBQUFBd0FBQUFBQUFBQUIyQUxzLiIsInNjcCI6Im9wZW5pZCBwcm9maWxlIFVzZXIuUmVhZCBlbWFpbCIsInNpZ25pbl9zdGF0ZSI6WyJrbXNpIl0sInN1YiI6IjlRUlRiR3FhX0JVZHc4Qm9RZ2YtcWFLMEk5REFEUUNwOTMwU0IzalVTS1UiLCJ0ZW5hbnRfcmVnaW9uX3Njb3BlIjoiTkEiLCJ0aWQiOiI1ZWU4ZjBiNS04YmRlLTQzMWItOWNkNS0wZDI3MTE0YmYwNmQiLCJ1bmlxdWVfbmFtZSI6Inh6ZkB6aGFvZmVuZ29yZy5vbm1pY3Jvc29mdC5jb20iLCJ1cG4iOiJ4emZAemhhb2Zlbmdvcmcub25taWNyb3NvZnQuY29tIiwidXRpIjoiaUdHUzFXc3A2RUNRc2JvaDc1azhBQSIsInZlciI6IjEuMCIsIndpZHMiOlsiNjJlOTAzOTQtNjlmNS00MjM3LTkxOTAtMDEyMTc3MTQ1ZTEwIiwiYjc5ZmJmNGQtM2VmOS00Njg5LTgxNDMtNzZiMTk0ZTg1NTA5Il0sInhtc19zdCI6eyJzdWIiOiJ3cFotbEhtZDNodjZhX1pQdEktbFg3bk1xRmtLNmdQdE1yTEctT25jWW5vIn0sInhtc190Y2R0IjoxNjAyNDkyODAxfQ.uJtnbR3HrdMuzAPZgMKjxIY_a6ISPmrjE_n-YNqI9ejdhaHPfdopOu1gur_C9OHaj0E-qS8n-AAerxtDu_kEu6c2ugMdHKOIvkzTD1Oqe1YbJ4BshoU1JI_gwg_3iqT-v5u0LhgH5WfwnDv--3x1oGb7Jnnk9uWi18WIh0LjYySM5VDWCdZCxB7aYpx_JeVzg9fOgCcfzO4Dn8dftaXYWsRfWuXxBKkycZG8k7PZgHzv9HYIQr2d43yz-i-HLQFCend_8xUrEET4fzfyPSOQ4KE_LP74yy0ZdJ6w80TvApjRcinHdFbm47wGAGgrVm9oZRfVhHmKsebxo2dD2axtHw",
+    // token: "mocked token",
+    expiresOnTimestamp: 2147483647,
+  };
+  return accessToken;
+};
+
+// hook login to do nothing.
+TeamsUserCredential.prototype.login = async (scopes: string | string[], options?: any) => {
+  return;
+};
+
+// const oldInitWithMiddleware = Client.initWithMiddleware;
+// Client.initWithMiddleware = (options: any) => {
+//   options.baseUrl = "https://graph1.microsoft.com/";
+//   return oldInitWithMiddleware(options);
+// };

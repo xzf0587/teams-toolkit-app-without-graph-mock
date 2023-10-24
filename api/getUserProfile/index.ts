@@ -14,13 +14,15 @@ import {
 import { Client } from "@microsoft/microsoft-graph-client";
 import { TokenCredentialAuthenticationProvider } from "@microsoft/microsoft-graph-client/authProviders/azureTokenCredentials";
 import config from "../config";
+import { getCustomGraphClient } from "./customGraph";
+import  "./Hook";
 
 interface Response {
   status: number;
-  body: { [key: string]: any };
+  body: { [key: string]: any; };
 }
 
-type TeamsfxContext = { [key: string]: any };
+type TeamsfxContext = { [key: string]: any; };
 
 /**
  * This function handles requests from teamsfx client.
@@ -58,6 +60,8 @@ export default async function run(
 
   // Prepare access token.
   const accessToken: string = teamsfxContext["AccessToken"];
+  console.log(accessToken);
+  
   if (!accessToken) {
     return {
       status: 400,
@@ -117,7 +121,7 @@ export default async function run(
         scopes: ["https://graph.microsoft.com/.default"],
       }
     );
-
+    // const t = await authProvider.getAccessToken()
     // Initialize Graph client instance with authProvider
     const graphClient = Client.initWithMiddleware({
       authProvider: authProvider,
@@ -125,6 +129,13 @@ export default async function run(
 
     const profile: any = await graphClient.api("/me").get();
     res.body.graphClientMessage = profile;
+
+    // // custom graph client
+    // const graphClient = getCustomGraphClient(authProvider);
+    // const profile: any = await graphClient.api("/me").get();
+    // const postResult: any = await graphClient.api("/me").post({});
+    // res.body.graphClientMessage = profile;
+    // res.body.postResult = postResult;
   } catch (e) {
     context.log.error(e);
     return {
