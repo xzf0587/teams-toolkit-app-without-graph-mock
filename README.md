@@ -5,8 +5,8 @@ It is used to develop and test graph api request without real endpoint but lever
 
 ## Running Steps 
 1. Use VSCode to open this project.
-1. Install Teams Toolkit extension in VSCode extension.
-1. Click `F5` to launch the local debug. (Select Debug (Edge) option. It will be default option)
+1. Install Teams Toolkit extension in VSCode extension if it is not installed.
+1. Click `F5` to launch the local debug. (Select Debug (Edge) option. It will be the default option)
    <br>
    It requires a M365 account to login and create a teams app and an aad app.
 1. Install the Teams app in popup Edge window.
