@@ -1,0 +1,321 @@
+{
+  "responses": [
+    {
+      "url": "https://graph.microsoft.com/v1.0/me/calendarview*",
+      "method": "GET",
+      "responseCode": 200,
+      "responseHeaders": {
+        "Content-type": "application/json"
+      },
+      "responseBody": {
+        "@odata.context": "https://graph.microsoft.com/v1.0/$metadata#users('48d31887-5fad-4d73-a9f5-3c356e68a038')/calendarView",
+        "value": [
+          {
+            "@odata.etag": "W/\"IiLKjG2I7E+Xv0+ys6MD0wAEd5/kNQ==\"",
+            "id": "AAMkAGVmMDEzMTM4LTZmYWUtNDdkNC1hMDZiLTU1OGY5OTZhYmY4OAFRAAgI29TtVOnAAEYAAAAAIkPFveuwe0ygY4Mfa1RFEQcAIiLKjG2I7E_Xv0_ys6MD0wAAAAABDQAAIiLKjG2I7E_Xv0_ys6MD0wAAGvliswAAEA==",
+            "createdDateTime": "2017-09-08T06:00:28.8891194Z",
+            "lastModifiedDateTime": "2022-05-06T22:11:24.573548Z",
+            "changeKey": "IiLKjG2I7E+Xv0+ys6MD0wAEd5/kNQ==",
+            "categories": [],
+            "transactionId": null,
+            "originalStartTimeZone": "UTC",
+            "originalEndTimeZone": "UTC",
+            "iCalUId": "040000008200E00074C5B7101A82E00807E70A195AFEAAB16728D30100000000000000001000000074AE946A36A51F4193FBB4912FCA5C46",
+            "reminderMinutesBeforeStart": 15,
+            "isReminderOn": true,
+            "hasAttachments": false,
+            "subject": "New Product Regulations Touchpoint",
+            "bodyPreview": "New Product Regulations Strategy Online Touchpoint MeetingYou're receiving this message because you're a member of the Engineering group. If you don't want to receive any messages or events from this group, stop following it in your inbox.View g",
+            "importance": "normal",
+            "sensitivity": "normal",
+            "isAllDay": false,
+            "isCancelled": false,
+            "isOrganizer": false,
+            "responseRequested": true,
+            "seriesMasterId": "AAMkAGVmMDEzMTM4LTZmYWUtNDdkNC1hMDZiLTU1OGY5OTZhYmY4OABGAAAAAAAiQ8W967B7TKBjgx9rVEURBwAiIsqMbYjsT5e-T7KzowPTAAAAAAENAAAiIsqMbYjsT5e-T7KzowPTAAAa_WKzAAA=",
+            "showAs": "tentative",
+            "type": "occurrence",
+            "webLink": "https://outlook.office365.com/owa/?itemid=AAMkAGVmMDEzMTM4LTZmYWUtNDdkNC1hMDZiLTU1OGY5OTZhYmY4OAFRAAgI29TtVOnAAEYAAAAAIkPFveuwe0ygY4Mfa1RFEQcAIiLKjG2I7E%2BXv0%2Bys6MD0wAAAAABDQAAIiLKjG2I7E%2BXv0%2Bys6MD0wAAGvliswAAEA%3D%3D&exvsurl=1&path=/calendar/item",
+            "onlineMeetingUrl": null,
+            "isOnlineMeeting": false,
+            "onlineMeetingProvider": "unknown",
+            "allowNewTimeProposals": true,
+            "occurrenceId": "OID.AAMkAGVmMDEzMTM4LTZmYWUtNDdkNC1hMDZiLTU1OGY5OTZhYmY4OABGAAAAAAAiQ8W967B7TKBjgx9rVEURBwAiIsqMbYjsT5e-T7KzowPTAAAAAAENAAAiIsqMbYjsT5e-T7KzowPTAAAa_WKzAAA=.2023-10-25",
+            "isDraft": false,
+            "hideAttendees": false,
+            "responseStatus": {
+              "response": "notResponded",
+              "time": "0001-01-01T00:00:00Z"
+            },
+            "body": {
+              "contentType": "html",
+              "content": "<html><head><meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\"></head><body>New Product Regulations Strategy Online Touchpoint Meeting<div id=\"a59ada49-a492-4f1d-ac57-74be3a4194fc\" style=\"display:inline-block\"><table cellspacing=\"0\" style=\"table-layout:fixed; width:50px; border:0 none black\"><tbody><tr><td style=\"height:18px; padding:0; border-width:0 0 1px 0; border-style:none none solid none; border-color:#EAEAEA\">&nbsp;</td></tr></tbody></table><table cellspacing=\"0\" style=\"table-layout:fixed; width:90%; line-height:17px; border:0 none black\"><tbody><tr><td style=\"height:17px; padding:0; border:0 none black\">&nbsp;</td></tr><tr><td style=\"padding:0; border:0 none black; color:#666666; font-size:12px; font-family:'Segoe UI','Segoe WP',sans-serif\">You're receiving this message because you're a member of the <a href=\"https://outlook.office365.com/owa/engineering@M365x214355.onmicrosoft.com/groupsubscription.ashx?realm=M365x214355.onmicrosoft.com&amp;source=EscalatedMessage&amp;action=conversations\" style=\"color:#0072C6; text-decoration:none; font-size:12px; font-family:'Segoe UI Semibold','Segoe WP Semibold','Segoe UI','Segoe WP',sans-serif\">Engineering</a> group. If you don't want to receive any messages or events from this group,<a href=\"https://outlook.office365.com/owa/engineering@M365x214355.onmicrosoft.com/groupsubscription.ashx?realm=M365x214355.onmicrosoft.com&amp;source=EscalatedMessage&amp;action=unsubscribe\" id=\"BD5134C6-8D33-4ABA-A0C4-08581FDF89DB\" style=\"color:#0072C6; text-decoration:none; font-size:12px; font-family:'Segoe UI Semibold','Segoe WP Semibold','Segoe UI','Segoe WP',sans-serif\">stop following it in your inbox</a>.</td></tr><tr><td style=\"height:17px; padding:0; border:0 none black\">&nbsp;</td></tr><tr><td style=\"padding:0; border:0 none black; font-size:12px; font-family:'Segoe UI','Segoe WP',sans-serif\"><span style=\"display:inline-block\"><a href=\"https://outlook.office365.com/owa/engineering@M365x214355.onmicrosoft.com/groupsubscription.ashx?realm=M365x214355.onmicrosoft.com&amp;source=EscalatedMessage&amp;action=conversations\" style=\"color:#666666; text-decoration:none; font-size:12px; font-family:'Segoe UI','Segoe WP',sans-serif\">View group conversations</a></span><span style=\"color:#C8C8C8\">&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;</span><span style=\"display:inline-block\"><a href=\"https://outlook.office365.com/owa/engineering@M365x214355.onmicrosoft.com/groupsubscription.ashx?realm=M365x214355.onmicrosoft.com&amp;source=EscalatedMessage&amp;action=files\" style=\"color:#666666; text-decoration:none; font-size:12px; font-family:'Segoe UI','Segoe WP',sans-serif\">View group files</a></span></td></tr><tr><td style=\"height:17px; padding:0; border:0 none black\">&nbsp;</td></tr></tbody></table></div></body></html>"
+            },
+            "start": {
+              "dateTime": "2023-10-25T17:00:00.0000000",
+              "timeZone": "UTC"
+            },
+            "end": {
+              "dateTime": "2023-10-25T17:30:00.0000000",
+              "timeZone": "UTC"
+            },
+            "location": {
+              "displayName": "Conf Room Rainier",
+              "locationType": "default",
+              "uniqueId": "Conf Room Rainier",
+              "uniqueIdType": "private"
+            },
+            "locations": [
+              {
+                "displayName": "Conf Room Rainier",
+                "locationType": "default",
+                "uniqueId": "Conf Room Rainier",
+                "uniqueIdType": "private"
+              }
+            ],
+            "recurrence": null,
+            "attendees": [
+              {
+                "type": "required",
+                "status": {
+                  "response": "none",
+                  "time": "0001-01-01T00:00:00Z"
+                },
+                "emailAddress": {
+                  "name": "Engineering",
+                  "address": "engineering@M365x214355.onmicrosoft.com"
+                }
+              },
+              {
+                "type": "required",
+                "status": {
+                  "response": "none",
+                  "time": "0001-01-01T00:00:00Z"
+                },
+                "emailAddress": {
+                  "name": "Irvin Sayers",
+                  "address": "IrvinS@M365x214355.onmicrosoft.com"
+                }
+              }
+            ],
+            "organizer": {
+              "emailAddress": {
+                "name": "Engineering",
+                "address": "engineering@M365x214355.onmicrosoft.com"
+              }
+            },
+            "onlineMeeting": null
+          },
+          {
+            "@odata.etag": "W/\"IiLKjG2I7E+Xv0+ys6MD0wAEeDFDfw==\"",
+            "id": "AAMkAGVmMDEzMTM4LTZmYWUtNDdkNC1hMDZiLTU1OGY5OTZhYmY4OAFRAAgI29W2f1OAAEYAAAAAIkPFveuwe0ygY4Mfa1RFEQcAIiLKjG2I7E_Xv0_ys6MD0wAAAAABDQAAIiLKjG2I7E_Xv0_ys6MD0wAAGvliqQAAEA==",
+            "createdDateTime": "2017-09-08T05:57:46.8659461Z",
+            "lastModifiedDateTime": "2022-05-07T23:39:40.9924029Z",
+            "changeKey": "IiLKjG2I7E+Xv0+ys6MD0wAEeDFDfw==",
+            "categories": [],
+            "transactionId": null,
+            "originalStartTimeZone": "UTC",
+            "originalEndTimeZone": "UTC",
+            "iCalUId": "040000008200E00074C5B7101A82E00807E70A1AF63A77526728D3010000000000000000100000001EE01F52DEEE194B9ABF0A7E79E24D98",
+            "reminderMinutesBeforeStart": 15,
+            "isReminderOn": true,
+            "hasAttachments": false,
+            "subject": "Market Segment Performance Update",
+            "bodyPreview": "You're receiving this message because you're a member of the Product Launch Event group. If you don't want to receive any messages or events from this group, stop following it in your inbox.View group conversations   |   View group files",
+            "importance": "normal",
+            "sensitivity": "normal",
+            "isAllDay": false,
+            "isCancelled": false,
+            "isOrganizer": false,
+            "responseRequested": true,
+            "seriesMasterId": "AAMkAGVmMDEzMTM4LTZmYWUtNDdkNC1hMDZiLTU1OGY5OTZhYmY4OABGAAAAAAAiQ8W967B7TKBjgx9rVEURBwAiIsqMbYjsT5e-T7KzowPTAAAAAAENAAAiIsqMbYjsT5e-T7KzowPTAAAa_WKpAAA=",
+            "showAs": "tentative",
+            "type": "occurrence",
+            "webLink": "https://outlook.office365.com/owa/?itemid=AAMkAGVmMDEzMTM4LTZmYWUtNDdkNC1hMDZiLTU1OGY5OTZhYmY4OAFRAAgI29W2f1OAAEYAAAAAIkPFveuwe0ygY4Mfa1RFEQcAIiLKjG2I7E%2BXv0%2Bys6MD0wAAAAABDQAAIiLKjG2I7E%2BXv0%2Bys6MD0wAAGvliqQAAEA%3D%3D&exvsurl=1&path=/calendar/item",
+            "onlineMeetingUrl": null,
+            "isOnlineMeeting": false,
+            "onlineMeetingProvider": "unknown",
+            "allowNewTimeProposals": true,
+            "occurrenceId": "OID.AAMkAGVmMDEzMTM4LTZmYWUtNDdkNC1hMDZiLTU1OGY5OTZhYmY4OABGAAAAAAAiQ8W967B7TKBjgx9rVEURBwAiIsqMbYjsT5e-T7KzowPTAAAAAAENAAAiIsqMbYjsT5e-T7KzowPTAAAa_WKpAAA=.2023-10-26",
+            "isDraft": false,
+            "hideAttendees": false,
+            "responseStatus": {
+              "response": "notResponded",
+              "time": "0001-01-01T00:00:00Z"
+            },
+            "body": {
+              "contentType": "html",
+              "content": "<html><head><meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\"></head><body><div id=\"a59ada49-a492-4f1d-ac57-74be3a4194fc\" style=\"display:inline-block\"><table cellspacing=\"0\" style=\"table-layout:fixed; width:50px; border:0 none black\"><tbody><tr><td style=\"height:18px; padding:0; border-width:0 0 1px 0; border-style:none none solid none; border-color:#EAEAEA\">&nbsp;</td></tr></tbody></table><table cellspacing=\"0\" style=\"table-layout:fixed; width:90%; line-height:17px; border:0 none black\"><tbody><tr><td style=\"height:17px; padding:0; border:0 none black\">&nbsp;</td></tr><tr><td style=\"padding:0; border:0 none black; color:#666666; font-size:12px; font-family:'Segoe UI','Segoe WP',sans-serif\">You're receiving this message because you're a member of the <a href=\"https://outlook.office365.com/owa/productlaunchevent@M365x214355.onmicrosoft.com/groupsubscription.ashx?realm=M365x214355.onmicrosoft.com&amp;source=EscalatedMessage&amp;action=conversations\" style=\"color:#0072C6; text-decoration:none; font-size:12px; font-family:'Segoe UI Semibold','Segoe WP Semibold','Segoe UI','Segoe WP',sans-serif\">Product Launch Event</a> group. If you don't want to receive any messages or events from this group,<a href=\"https://outlook.office365.com/owa/productlaunchevent@M365x214355.onmicrosoft.com/groupsubscription.ashx?realm=M365x214355.onmicrosoft.com&amp;source=EscalatedMessage&amp;action=unsubscribe\" id=\"BD5134C6-8D33-4ABA-A0C4-08581FDF89DB\" style=\"color:#0072C6; text-decoration:none; font-size:12px; font-family:'Segoe UI Semibold','Segoe WP Semibold','Segoe UI','Segoe WP',sans-serif\">stop following it in your inbox</a>.</td></tr><tr><td style=\"height:17px; padding:0; border:0 none black\">&nbsp;</td></tr><tr><td style=\"padding:0; border:0 none black; font-size:12px; font-family:'Segoe UI','Segoe WP',sans-serif\"><span style=\"display:inline-block\"><a href=\"https://outlook.office365.com/owa/productlaunchevent@M365x214355.onmicrosoft.com/groupsubscription.ashx?realm=M365x214355.onmicrosoft.com&amp;source=EscalatedMessage&amp;action=conversations\" style=\"color:#666666; text-decoration:none; font-size:12px; font-family:'Segoe UI','Segoe WP',sans-serif\">View group conversations</a></span><span style=\"color:#C8C8C8\">&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;</span><span style=\"display:inline-block\"><a href=\"https://outlook.office365.com/owa/productlaunchevent@M365x214355.onmicrosoft.com/groupsubscription.ashx?realm=M365x214355.onmicrosoft.com&amp;source=EscalatedMessage&amp;action=files\" style=\"color:#666666; text-decoration:none; font-size:12px; font-family:'Segoe UI','Segoe WP',sans-serif\">View group files</a></span></td></tr><tr><td style=\"height:17px; padding:0; border:0 none black\">&nbsp;</td></tr></tbody></table></div></body></html>"
+            },
+            "start": {
+              "dateTime": "2023-10-26T17:30:00.0000000",
+              "timeZone": "UTC"
+            },
+            "end": {
+              "dateTime": "2023-10-26T19:30:00.0000000",
+              "timeZone": "UTC"
+            },
+            "location": {
+              "displayName": "Conf Room Rainier",
+              "locationType": "default",
+              "uniqueId": "Conf Room Rainier",
+              "uniqueIdType": "private"
+            },
+            "locations": [
+              {
+                "displayName": "Conf Room Rainier",
+                "locationType": "default",
+                "uniqueId": "Conf Room Rainier",
+                "uniqueIdType": "private"
+              }
+            ],
+            "recurrence": null,
+            "attendees": [
+              {
+                "type": "required",
+                "status": {
+                  "response": "none",
+                  "time": "0001-01-01T00:00:00Z"
+                },
+                "emailAddress": {
+                  "name": "Product Launch Event",
+                  "address": "productlaunchevent@M365x214355.onmicrosoft.com"
+                }
+              },
+              {
+                "type": "required",
+                "status": {
+                  "response": "none",
+                  "time": "0001-01-01T00:00:00Z"
+                },
+                "emailAddress": {
+                  "name": "Lynne Robbins",
+                  "address": "LynneR@M365x214355.onmicrosoft.com"
+                }
+              },
+              {
+                "type": "required",
+                "status": {
+                  "response": "none",
+                  "time": "0001-01-01T00:00:00Z"
+                },
+                "emailAddress": {
+                  "name": "Grady Archie",
+                  "address": "GradyA@M365x214355.onmicrosoft.com"
+                }
+              }
+            ],
+            "organizer": {
+              "emailAddress": {
+                "name": "Product Launch Event",
+                "address": "productlaunchevent@M365x214355.onmicrosoft.com"
+              }
+            },
+            "onlineMeeting": null
+          }
+        ],
+        "@odata.nextLink": "https://graph.microsoft.com/v1.0/me/calendarView?startdatetime=2023-10-24T01%3a40%3a32.321Z&enddatetime=2023-10-31T01%3a40%3a32.321Z&%24top=10&%24skip=10"
+      }
+    },
+    {
+      "url": "https://graph.microsoft.com/v1.0/me?*",
+      "responseBody": {
+        "@odata.context": "https://graph.microsoft.com/v1.0/$metadata#users/$entity",
+        "businessPhones": [
+          "+1 412 555 0109"
+        ],
+        "displayName": "Megan Bowen",
+        "givenName": "Megan",
+        "jobTitle": "Auditor",
+        "mail": "MeganB@M365x214355.onmicrosoft.com",
+        "mobilePhone": null,
+        "officeLocation": "12/1110",
+        "preferredLanguage": "en-US",
+        "surname": "Bowen",
+        "userPrincipalName": "MeganB@M365x214355.onmicrosoft.com",
+        "id": "48d31887-5fad-4d73-a9f5-3c356e68a038"
+      }
+    },
+    {
+      "url": "https://graph.microsoft.com/v1.0/me",
+      "responseBody": {
+        "@odata.context": "https://graph.microsoft.com/v1.0/$metadata#users/$entity",
+        "businessPhones": [
+          "+1 412 555 0109"
+        ],
+        "displayName": "Megan Bowen",
+        "givenName": "Megan",
+        "jobTitle": "Auditor",
+        "mail": "MeganB@M365x214355.onmicrosoft.com",
+        "mobilePhone": null,
+        "officeLocation": "12/1110",
+        "preferredLanguage": "en-US",
+        "surname": "Bowen",
+        "userPrincipalName": "MeganB@M365x214355.onmicrosoft.com",
+        "id": "48d31887-5fad-4d73-a9f5-3c356e68a038"
+      }
+    },
+    {
+      "url": "https://graph.microsoft.com/v1.0/me",
+      "method": "PATCH",
+      "responseBody": {},
+      "responseCode": 204
+    },
+    {
+      "url": "https://graph.microsoft.com/v1.0/users/48d31887-5fad-4d73-a9f5-3c356e68a038",
+      "responseBody": {
+        "@odata.context": "https://graph.microsoft.com/v1.0/$metadata#users/$entity",
+        "businessPhones": [
+          "+1 412 555 0109"
+        ],
+        "displayName": "Megan Bowen",
+        "givenName": "Megan",
+        "jobTitle": "Auditor",
+        "mail": "MeganB@M365x214355.onmicrosoft.com",
+        "mobilePhone": null,
+        "officeLocation": "12/1110",
+        "preferredLanguage": "en-US",
+        "surname": "Bowen",
+        "userPrincipalName": "MeganB@M365x214355.onmicrosoft.com",
+        "id": "48d31887-5fad-4d73-a9f5-3c356e68a038"
+      }
+    },
+    {
+      "url": "https://graph.microsoft.com/v1.0/me/photo",
+      "responseCode": 404
+    },
+    {
+      "url": "https://graph.microsoft.com/v1.0/me/photo/$value",
+      "responseBody": "@picture.png",
+      "responseHeaders": {
+        "content-type": "image/png"
+      }
+    },
+    {
+      "url": "https://graph.microsoft.com/v1.0/users/*/photo/$value",
+      "responseBody": "@picture.png",
+      "responseHeaders": {
+        "content-type": "image/png"
+      }
+    },
+    {
+      "url": "https://graph.microsoft.com/v1.0/users/*",
+      "responseBody": {
+        "@odata.context": "https://graph.microsoft.com/v1.0/$metadata#users/$entity",
+        "businessPhones": [
+          "+1 425 555 0109"
+        ],
+        "displayName": "Adele Vance",
+        "givenName": "Adele",
+        "jobTitle": "Product Marketing Manager",
+        "mail": "AdeleV@M365x214355.onmicrosoft.com",
+        "mobilePhone": null,
+        "officeLocation": "18/2111",
+        "preferredLanguage": "en-US",
+        "surname": "Vance",
+        "userPrincipalName": "AdeleV@M365x214355.onmicrosoft.com",
+        "id": "87d349ed-44d7-43e1-9a83-5f2406dee5bd"
+      }
+    }
+  ]
+}
