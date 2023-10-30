@@ -1,84 +1,36 @@
 import { useContext, useState } from "react";
-import { Button } from "@fluentui/react-components";
+import { Button, Spinner } from "@fluentui/react-components";
 import { TeamsFxContext } from "../Context";
 import { Client } from "@microsoft/microsoft-graph-client";
 import { TokenCredentialAuthenticationProvider } from "@microsoft/microsoft-graph-client/authProviders/azureTokenCredentials";
+import { useData } from "@microsoft/teamsfx-react";
 export function GraphApiCall(props: { codePath?: string; docsUrl?: string; }) {
   const teamsUserCredential = useContext(TeamsFxContext).teamsUserCredential;
-  const [data, setData] = useState({
-    profile: "Click to Call GraphApi from browser" as any,
-    calendarView: {} as any,
-    imgUrl: "",
-    error: undefined as any,
-  });
-  const clickHandler = async () => {
-    try {
-      if (!teamsUserCredential) {
-        throw new Error("TeamsFx SDK is not initialized.");
-      }
-      // await teamsUserCredential!.getToken(["User.Write.All"]);
-      // await teamsUserCredential!.getToken(["User.Read"]);
-      {
-        const authProvider = new TokenCredentialAuthenticationProvider(
-          teamsUserCredential,
-          {
-            scopes: ["https://graph.microsoft.com/User.Read"],
-          }
-        );
-        // Initialize Graph client instance with authProvider
-        const graphClient = Client.initWithMiddleware({
-          authProvider: authProvider,
-        });
-        const profile: any = await graphClient.api("/me").get();
-        const calendarView: any = await graphClient.api("me/calendarview").get();
-        const image: any = await graphClient.api(`/users/${profile.id}/photo/$value`).get();
-        const url = window.URL || window.webkitURL;
-        const imgUrl = url.createObjectURL(image);
-        // return {
-        //   profile,
-        //   imgUrl,
-        // };
-        setData({
-          profile,
-          imgUrl,
-          calendarView,
-          error: "",
-        });
-      }
-    } catch (error: any) {
-      setData({
-        profile: undefined,
-        imgUrl: "",
-        calendarView: {},
-        error: error.message,
-      });
+  const authProvider = new TokenCredentialAuthenticationProvider(
+    teamsUserCredential!,
+    {
+      // as the graph api is mocked, any scope is ok.
+      scopes: ["https://graph.microsoft.com/User.Read.All"],
     }
-  };
-  // const { loading, data, error, reload } = useData(async () => {
-  //   if (!teamsUserCredential) {
-  //     throw new Error("TeamsFx SDK is not initialized.");
-  //   }
-  //   {
-  //     const authProvider = new TokenCredentialAuthenticationProvider(
-  //       teamsUserCredential,
-  //       {
-  //         scopes: ["https://graph.microsoft.com/User.Read"],
-  //       }
-  //     );
-  //     // Initialize Graph client instance with authProvider
-  //     const graphClient = Client.initWithMiddleware({
-  //       authProvider: authProvider,
-  //     });
-  //     const profile: any = await graphClient.api("/me").get();
-  //     const image: any = await graphClient.api(`/users/${profile.id}/photo/$value`).get();
-  //     const url = window.URL || window.webkitURL;
-  //     const imgUrl = url.createObjectURL(image);
-  //     return {
-  //       profile,
-  //       imgUrl,
-  //     };
-  //   }
-  // });
+  );
+  const graphClient = Client.initWithMiddleware({
+    authProvider: authProvider,
+  });
+  const { loading: loadingProfile, data: profileData, error: profileError, reload: reloadProfile } = useData(async () => {
+    const profile = await graphClient.api("/me").get();
+    return profile;
+  }, { autoLoad: false });
+
+  const { loading: loadingCalendar, data: calendarData, error: calendarError, reload: reloadCalendar } = useData(async () => {
+    const calendarView = await graphClient.api("me/calendarview").get();
+    return calendarView;
+  }, { autoLoad: false });
+
+  const { loading: loadingPhoto, data: photoData, error: photoError, reload: reloadPhoto } = useData(async () => {
+    const photo = await graphClient.api("/users/me/photo/$value").get();
+    const url = window.URL || window.webkitURL;
+    return url.createObjectURL(photo);
+  }, { autoLoad: false });
   return (
     <div>
       <h2>Call Graph API in frontend</h2>
@@ -87,21 +39,59 @@ export function GraphApiCall(props: { codePath?: string; docsUrl?: string; }) {
         {`Use teamsUserCredential as authProvider of graph client.\n`}
         {`As the getToken method of teamsUserCredential has been hooked, there is no permission error.\n`}
         {`Call Graph API: \n`}
-        <code>{`  const profile: any = await graphClient.api("/me").get();`}</code>
-        {`\nUsed API: \n`}
+        <code>{`  const result: any = await graphClient.api({URI}).get();`}</code>
+        {`\nGrpah API used: \n`}
         {`https://graph.microsoft.com/v1.0/me\n`}
         {`https://graph.microsoft.com/v1.0/me/calendarview\n`}
         {`https://graph.microsoft.com/v1.0/users/{userId}/photo/$value`}
       </pre>
-      {(
-        <Button appearance="primary" onClick={clickHandler}>
-          Call Graph API in frontend
-        </Button>
-      )}
-      {!!data.profile && !data.error && <pre className="fixed">{JSON.stringify(data.profile, null, 2)}</pre>}
-      {!!data.imgUrl && !data.error && <img src={data.imgUrl} loading="lazy" />}
-      {!!data.calendarView && !data.error && <pre className="fixed">{JSON.stringify(data.calendarView, null, 2)}</pre>}
-      {!!data.error && <div className="error fixed">{data.error}</div>}
+      <div className="profile">
+        {!loadingProfile && (
+          <Button appearance="primary" disabled={loadingProfile} onClick={reloadProfile}>
+            Send Request graph.microsoft.com/v1.0/me
+          </Button>
+        )}
+        {loadingProfile && (
+          <pre className="fixed">
+            <Spinner />
+          </pre>
+        )}
+        {!loadingProfile && !!profileData && !profileError && <pre className="fixed">{JSON.stringify(profileData, null, 2)}</pre>}
+        {!loadingProfile && !!profileError && <div className="error fixed">{`failed for statusCode: ${(profileError as any).statusCode}`}</div>}
+      </div>
+      <p></p>
+      <div className="calendarview">
+        {!loadingCalendar && (
+          <Button appearance="primary" disabled={loadingCalendar} onClick={reloadCalendar}>
+            Send Request graph.microsoft.com/v1.0/me/calendarview
+          </Button>
+        )}
+        {loadingCalendar && (
+          <pre className="fixed">
+            <Spinner />
+          </pre>
+        )}
+        {!loadingCalendar && !!calendarData && !calendarError && <pre className="fixed">{JSON.stringify(calendarData, null, 2)}</pre>}
+        {!loadingCalendar && !!calendarError && <div className="error fixed">{`failed for statusCode: ${(calendarError as any).statusCode}`}</div>}
+      </div>
+      <p></p>
+      <div className="photo">
+        {!loadingPhoto && (
+          <Button appearance="primary" disabled={loadingPhoto} onClick={reloadPhoto}>
+            Send Request graph.microsoft.com/v1.0/me/photo/$value
+          </Button>
+        )}
+        {loadingPhoto && (
+          <pre className="fixed">
+            <Spinner />
+          </pre>
+        )}
+        <p></p>
+        {!loadingPhoto && !!photoData && !photoError && <img src={photoData} loading="lazy" />}
+        {!loadingPhoto && !!photoError && <div className="error fixed">{`failed for statusCode: ${(photoError as any).statusCode}`}</div>}
+      </div>
+
     </div>
   );
 }
+
