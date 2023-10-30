@@ -9,12 +9,10 @@ import { Context, HttpRequest } from "@azure/functions";
 import {
   OnBehalfOfCredentialAuthConfig,
   OnBehalfOfUserCredential,
-  UserInfo,
 } from "@microsoft/teamsfx";
 import { Client } from "@microsoft/microsoft-graph-client";
 import { TokenCredentialAuthenticationProvider } from "@microsoft/microsoft-graph-client/authProviders/azureTokenCredentials";
 import config from "../config";
-import { getCustomGraphClient } from "./customGraph";
 import  "./Hook";
 
 interface Response {
@@ -81,7 +79,6 @@ export default async function run(
         scopes: ["https://graph.microsoft.com/.default"],
       }
     );
-    // const t = await authProvider.getAccessToken()
     // Initialize Graph client instance with authProvider
     const graphClient = Client.initWithMiddleware({
       authProvider: authProvider,
