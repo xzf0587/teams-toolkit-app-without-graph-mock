@@ -3,61 +3,65 @@ import { AccessToken } from "@azure/identity";
 import { AuthenticationProvider, Client, Context, Middleware, MiddlewareFactory } from "@microsoft/microsoft-graph-client";
 import { HttpsProxyAgent } from "hpagent";
 import fetch from "node-fetch";
-// import "isomorphic-fetch";
 
-// hook getToken to return a mocked access token. The token can not be used to call real graph api. To go through the flow of graph api call, please handle th.
-OnBehalfOfUserCredential.prototype.getToken = async (scopes: string | string[], options?: any) => {
-  const accessToken: AccessToken = {
-    // token: "eyJ0eXAiOiJKV1QiLCJub25jZSI6InpyczlqQzBtUmRGRjhPWDBpbmwtbjBmaFNHWldKZmE5SU1tQXM0UGNXY00iLCJhbGciOiJSUzI1NiIsIng1dCI6IjlHbW55RlBraGMzaE91UjIybXZTdmduTG83WSIsImtpZCI6IjlHbW55RlBraGMzaE91UjIybXZTdmduTG83WSJ9.eyJhdWQiOiJodHRwczovL2dyYXBoLm1pY3Jvc29mdC5jb20iLCJpc3MiOiJodHRwczovL3N0cy53aW5kb3dzLm5ldC81ZWU4ZjBiNS04YmRlLTQzMWItOWNkNS0wZDI3MTE0YmYwNmQvIiwiaWF0IjoxNjk2ODI2MzgwLCJuYmYiOjE2OTY4MjYzODAsImV4cCI6MTY5NjgzMDMzOSwiYWNjdCI6MCwiYWNyIjoiMSIsImFpbyI6IkFUUUF5LzhVQUFBQWVIdGx6SGlzaHBrTm5aVFR6NzBCZ1AycnM2cW54OUFjMU1ubFRqVUhSZkpNSVdwRFZHTUlxRlNqTzRZOHErVGwiLCJhbXIiOlsicHdkIiwicnNhIl0sImFwcF9kaXNwbGF5bmFtZSI6ImhlbGxvLXdvcmxkLXRhYi13aXRoLWJhY2tlbmQtYWFkIiwiYXBwaWQiOiI1M2NkYzhlYy01ZmY5LTQ3MWEtYmRmOS1hNTI0ZjEzZjY1NTIiLCJhcHBpZGFjciI6IjAiLCJkZXZpY2VpZCI6IjQwYzcwNTQ4LTMyOWYtNGM1NC04MmU3LTllZjA0MmE3MmQ2NSIsImZhbWlseV9uYW1lIjoieHYiLCJnaXZlbl9uYW1lIjoia25pZmUiLCJpZHR5cCI6InVzZXIiLCJpcGFkZHIiOiIxNjcuMjIwLjI1NS4xIiwibmFtZSI6ImtuaWZlIHh2Iiwib2lkIjoiYmQxZTViZDEtNGFlMC00OTcxLWE0M2UtNGI5YWJhY2U3N2IzIiwicGxhdGYiOiIzIiwicHVpZCI6IjEwMDMyMDAwRUNBMDREMTMiLCJyaCI6IjAuQVhZQXRmRG9YdDZMRzBPYzFRMG5FVXZ3YlFNQUFBQUFBQUFBd0FBQUFBQUFBQUIyQUxzLiIsInNjcCI6Im9wZW5pZCBwcm9maWxlIFVzZXIuUmVhZCBlbWFpbCIsInNpZ25pbl9zdGF0ZSI6WyJrbXNpIl0sInN1YiI6IjlRUlRiR3FhX0JVZHc4Qm9RZ2YtcWFLMEk5REFEUUNwOTMwU0IzalVTS1UiLCJ0ZW5hbnRfcmVnaW9uX3Njb3BlIjoiTkEiLCJ0aWQiOiI1ZWU4ZjBiNS04YmRlLTQzMWItOWNkNS0wZDI3MTE0YmYwNmQiLCJ1bmlxdWVfbmFtZSI6Inh6ZkB6aGFvZmVuZ29yZy5vbm1pY3Jvc29mdC5jb20iLCJ1cG4iOiJ4emZAemhhb2Zlbmdvcmcub25taWNyb3NvZnQuY29tIiwidXRpIjoiaUdHUzFXc3A2RUNRc2JvaDc1azhBQSIsInZlciI6IjEuMCIsIndpZHMiOlsiNjJlOTAzOTQtNjlmNS00MjM3LTkxOTAtMDEyMTc3MTQ1ZTEwIiwiYjc5ZmJmNGQtM2VmOS00Njg5LTgxNDMtNzZiMTk0ZTg1NTA5Il0sInhtc19zdCI6eyJzdWIiOiJ3cFotbEhtZDNodjZhX1pQdEktbFg3bk1xRmtLNmdQdE1yTEctT25jWW5vIn0sInhtc190Y2R0IjoxNjAyNDkyODAxfQ.uJtnbR3HrdMuzAPZgMKjxIY_a6ISPmrjE_n-YNqI9ejdhaHPfdopOu1gur_C9OHaj0E-qS8n-AAerxtDu_kEu6c2ugMdHKOIvkzTD1Oqe1YbJ4BshoU1JI_gwg_3iqT-v5u0LhgH5WfwnDv--3x1oGb7Jnnk9uWi18WIh0LjYySM5VDWCdZCxB7aYpx_JeVzg9fOgCcfzO4Dn8dftaXYWsRfWuXxBKkycZG8k7PZgHzv9HYIQr2d43yz-i-HLQFCend_8xUrEET4fzfyPSOQ4KE_LP74yy0ZdJ6w80TvApjRcinHdFbm47wGAGgrVm9oZRfVhHmKsebxo2dD2axtHw",
-    token: "mocked token",
-    expiresOnTimestamp: 2147483647,
+function shouldHook(): boolean {
+  return process.env.HOOK_GRAPH === "true";
+}
+
+if (shouldHook()) {
+  // hook getToken to return a mocked access token. The token can not be used to call real graph api. To go through the flow of graph api call, please handle th.
+  OnBehalfOfUserCredential.prototype.getToken = async (scopes: string | string[], options?: any) => {
+    const accessToken: AccessToken = {
+      token: "mocked token",
+      expiresOnTimestamp: 2147483647,
+    };
+    return accessToken;
   };
-  return accessToken;
-};
 
-class ProxyMiddleware implements Middleware {
-  private url: string;
+  class ProxyMiddleware implements Middleware {
+    private url: string;
 
-  private nextMiddleware!: Middleware;
+    private nextMiddleware!: Middleware;
 
-  public constructor(url: string) {
-    this.url = url;
-  }
-
-  public async execute(context: Context): Promise<void> {
-    if (context.options) {
-      context.options.agent = new HttpsProxyAgent({
-        proxy: this.url,
-        rejectUnauthorized: false,
-      });
+    public constructor(url: string) {
+      this.url = url;
     }
 
-    return await this.nextMiddleware.execute(context);
+    public async execute(context: Context): Promise<void> {
+      if (context.options) {
+        context.options.agent = new HttpsProxyAgent({
+          proxy: this.url,
+          rejectUnauthorized: false,
+        });
+      }
+
+      return await this.nextMiddleware.execute(context);
+    }
+
+    public setNext(next: Middleware): void {
+      this.nextMiddleware = next;
+    }
   }
 
-  public setNext(next: Middleware): void {
-    this.nextMiddleware = next;
+  class AuthenticationProviderImpl implements AuthenticationProvider {
+    private accessToken = "mocked token";
+    public async getAccessToken(): Promise<string> {
+      return this.accessToken;
+    }
   }
-}
 
-export class AuthenticationProviderImpl implements AuthenticationProvider {
-  private accessToken = "eyJ0eXAiOiJKV1QiLCJub25jZSI6IlJTSmZsWkNBMHg5cWZBdW9LdGV1WUpLRVdnOFN2eGt3S1lYYmdpaEtVNVkiLCJhbGciOiJSUzI1NiIsIng1dCI6IjlHbW55RlBraGMzaE91UjIybXZTdmduTG83WSIsImtpZCI6IjlHbW55RlBraGMzaE91UjIybXZTdmduTG83WSJ9.eyJhdWQiOiJodHRwczovL2dyYXBoLm1pY3Jvc29mdC5jb20iLCJpc3MiOiJodHRwczovL3N0cy53aW5kb3dzLm5ldC81ZWU4ZjBiNS04YmRlLTQzMWItOWNkNS0wZDI3MTE0YmYwNmQvIiwiaWF0IjoxNjk2ODk5ODM5LCJuYmYiOjE2OTY4OTk4MzksImV4cCI6MTY5NjkwMzgyNCwiYWNjdCI6MCwiYWNyIjoiMSIsImFpbyI6IkFUUUF5LzhVQUFBQU0vWWtWSzcxMmd4Y091T1FSc1B0NGcvTlB1cm9lSXlpWmhCUEpjVGRiTGIrNDdTR3A1dUVaKzJBdmNua0NyM0kiLCJhbXIiOlsicHdkIiwicnNhIl0sImFwcF9kaXNwbGF5bmFtZSI6ImhlbGxvLXdvcmxkLXRhYi13aXRoLWJhY2tlbmQtYWFkIiwiYXBwaWQiOiI1M2NkYzhlYy01ZmY5LTQ3MWEtYmRmOS1hNTI0ZjEzZjY1NTIiLCJhcHBpZGFjciI6IjAiLCJkZXZpY2VpZCI6IjQwYzcwNTQ4LTMyOWYtNGM1NC04MmU3LTllZjA0MmE3MmQ2NSIsImZhbWlseV9uYW1lIjoieHYiLCJnaXZlbl9uYW1lIjoia25pZmUiLCJpZHR5cCI6InVzZXIiLCJpcGFkZHIiOiIyNDA0OmY4MDE6OTAwMDoxYTo4Njg3OmZkODA6NjllOTpmNTIiLCJuYW1lIjoia25pZmUgeHYiLCJvaWQiOiJiZDFlNWJkMS00YWUwLTQ5NzEtYTQzZS00YjlhYmFjZTc3YjMiLCJwbGF0ZiI6IjMiLCJwdWlkIjoiMTAwMzIwMDBFQ0EwNEQxMyIsInJoIjoiMC5BWFlBdGZEb1h0NkxHME9jMVEwbkVVdndiUU1BQUFBQUFBQUF3QUFBQUFBQUFBQjJBTHMuIiwic2NwIjoib3BlbmlkIHByb2ZpbGUgVXNlci5SZWFkIFVzZXIuUmVhZC5BbGwgZW1haWwiLCJzaWduaW5fc3RhdGUiOlsia21zaSJdLCJzdWIiOiI5UVJUYkdxYV9CVWR3OEJvUWdmLXFhSzBJOURBRFFDcDkzMFNCM2pVU0tVIiwidGVuYW50X3JlZ2lvbl9zY29wZSI6Ik5BIiwidGlkIjoiNWVlOGYwYjUtOGJkZS00MzFiLTljZDUtMGQyNzExNGJmMDZkIiwidW5pcXVlX25hbWUiOiJ4emZAemhhb2Zlbmdvcmcub25taWNyb3NvZnQuY29tIiwidXBuIjoieHpmQHpoYW9mZW5nb3JnLm9ubWljcm9zb2Z0LmNvbSIsInV0aSI6IlFwRmI4ajRrMzB1VEFZS2s2OWhkQUEiLCJ2ZXIiOiIxLjAiLCJ3aWRzIjpbIjYyZTkwMzk0LTY5ZjUtNDIzNy05MTkwLTAxMjE3NzE0NWUxMCIsImI3OWZiZjRkLTNlZjktNDY4OS04MTQzLTc2YjE5NGU4NTUwOSJdLCJ4bXNfc3QiOnsic3ViIjoid3BaLWxIbWQzaHY2YV9aUHRJLWxYN25NcUZrSzZnUHRNckxHLU9uY1lubyJ9LCJ4bXNfdGNkdCI6MTYwMjQ5MjgwMX0.WfvaonXh7IWHWmeXhyldhkfD4iyS5CPiVE6vpLtTgm6RF1W2VU_Zvp3yjeoPOdz33_QuHP2-X129BaTDSlSH1wWQyYMpyUsBZCKcMheE0nv2BO0fwjOkjud2stlopi_oyoX9ZXp6mCAzJl3GTUCyLE6qUzJXlMYwrPXqc6xCAk6VVerjGnhfac_6EswKnfeHGpRFbmVZUyLRv-_YV61-K_6g_ps9aMiNZWP-zligwyBGDyZCFXe-DVVT9h80lSbh6zdad0RwXYs6YsKvgo_IEST7Lw4xqUuVSCGnYu6gXjJFTXFoaCkIxChLaLg0Q2L60s99wZEUh0b8z6inHDVpFw";
-  public async getAccessToken(): Promise<string> {
-    return this.accessToken;
-  }
-}
-
-const oldInitWithMiddleware = Client.initWithMiddleware;
-Client.initWithMiddleware = (options: any) => {
-  // const middleware = MiddlewareFactory.getDefaultMiddlewareChain(authProvider);
-  const middleware = MiddlewareFactory.getDefaultMiddlewareChain(new AuthenticationProviderImpl());
-  // can use process.env.HTTPS_PROXY or process.env.HTTP_PROXY to create proxy
-  middleware.splice(-1, 0, new ProxyMiddleware("http://127.0.0.1:8000"));
-  middleware[middleware.length - 1].execute = async (context: Context) => {
-    context.response = await fetch(context.request, context.options);
+  const oldInitWithMiddleware = Client.initWithMiddleware;
+  Client.initWithMiddleware = (options: any) => {
+    // const middleware = MiddlewareFactory.getDefaultMiddlewareChain(authProvider);
+    const middleware = MiddlewareFactory.getDefaultMiddlewareChain(new AuthenticationProviderImpl());
+    // can use process.env.HTTPS_PROXY or process.env.HTTP_PROXY to create proxy
+    middleware.splice(-1, 0, new ProxyMiddleware("http://127.0.0.1:8000"));
+    middleware[middleware.length - 1].execute = async (context: Context) => {
+      context.response = await fetch(context.request, context.options);
+    };
+    // options.middleware = middleware;
+    // options.baseUrl = "https://graph1.microsoft.com/";
+    // return oldInitWithMiddleware(options);
+    return oldInitWithMiddleware({ middleware: middleware });
   };
-  // options.middleware = middleware;
-  // options.baseUrl = "https://graph1.microsoft.com/";
-  // return oldInitWithMiddleware(options);
-  return oldInitWithMiddleware({ middleware: middleware });
-};
+}
