@@ -1,37 +1,39 @@
 import { useContext, useState } from "react";
-import { Button } from "@fluentui/react-components";
+import { Button, Spinner } from "@fluentui/react-components";
 import { TeamsFxContext } from "../Context";
+import { useData } from "@microsoft/teamsfx-react";
 
 export function Login(props: { codePath?: string; docsUrl?: string; }) {
   const teamsUserCredential = useContext(TeamsFxContext).teamsUserCredential;
-  const [message, setMessage] = useState("click login button to login first");
-  const clickHandler = async () => {
-    try {
-      if (!teamsUserCredential) {
-        throw new Error("TeamsFx SDK is not initialized.");
-      }
-      await teamsUserCredential!.login(["User.Read"]);
-      // The first time to get token will set msal.account.keys in session storage. 
-      // If there is no account info in session storage, it will not execute acquireTokenSilent to get access token by refresh token.
-      // It will execute ssoSilent login instead. Currently, the mocked response of the oauth token api can not support auth code 
-      // await teamsUserCredential!.getToken(["User.Read"]);
-      return setMessage("login success");
-    } catch (error: any) {
-      setMessage(error.message);
+  const { loading, data, error, reload } = useData(async () => {
+    if (!teamsUserCredential) {
+      throw new Error("TeamsFx SDK is not initialized.");
     }
-  };
+    await teamsUserCredential.getUserInfo();
+    await teamsUserCredential!.login(["User.Read.All", "Calendars.Read.All"]);
+    const loginRes = "login success";
+    return loginRes;
+  }, { autoLoad: false });
+
   return (
     <div>
-      <h2>Login</h2>
+      <h2>Hook Login</h2>
       <pre>
-        {`Use hook to handle the teamsUserCredential login method. It will always return success.`}
+        {`Hook the teamsUserCredential login method. It will always return success.\n`}
+        {`Login for scopes: ["User.Read.All", "Calendars.Read.All"]`}
       </pre>
-      {(
-        <Button appearance="primary" onClick={clickHandler}>
+      {!loading && (
+        <Button appearance="primary" disabled={loading} onClick={reload}>
           Login
         </Button>
       )}
-      {<p className="fixed">{message}</p>}
+      {loading && (
+        <pre className="fixed">
+          <Spinner />
+        </pre>
+      )}
+      {!loading && !!data && !error && <p className="fixed">{data}</p>}
+      {!loading && !!error && <div className="error fixed">{(error as any).toString()}</div>}
     </div>
   );
 }
