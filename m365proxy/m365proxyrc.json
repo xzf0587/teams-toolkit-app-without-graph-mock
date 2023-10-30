@@ -144,7 +144,7 @@
     "blockUnmockedRequests": false
   },
   "graphRandomErrorsPlugin": {
-    "allowedErrors": [ 429, 500, 502, 503, 504, 507 ]
+    "allowedErrors": [ 500, 502, 507 ]
   },
   "executionSummaryPlugin": {
     "groupBy": "url"

@@ -7,6 +7,7 @@
   "private": true,
   "dependencies": {
     "@fluentui/react-components": "^9.18.0",
+    "@microsoft/mgt-react": "^3.1.3",
     "@microsoft/teams-js": "^2.15.0",
     "@microsoft/teamsfx": "^2.2.0",
     "@microsoft/teamsfx-react": "^3.0.0",
@@ -14,8 +15,7 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.8.0",
-    "react-scripts": "^5.0.1",
-    "scheduler": "^0.23.0"
+    "react-scripts": "^5.0.1"
   },
   "devDependencies": {
     "@types/node": "^14.0.0",
@@ -31,7 +31,8 @@
     "build": "react-scripts build",
     "test": "echo \"Error: no test specified\" && exit 1",
     "eject": "react-scripts eject",
-    "start:m365proxy": "cd m365proxy && m365proxy  -f 0 --mocks-file responses.sample.json --watch-process-names node msedge --record --summary-file-path m365proxyReport.md"
+    "m365proxy": "cd m365proxy && m365proxy -f 0 --mocks-file responses.sample.json --watch-process-names node msedge --record",
+    "m365proxy:error": "cd m365proxy && m365proxy -f 100 --watch-process-names node msedge --record"
   },
   "eslintConfig": {
     "extends": [
