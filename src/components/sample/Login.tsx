@@ -10,7 +10,11 @@ export function Login(props: { codePath?: string; docsUrl?: string; }) {
       throw new Error("TeamsFx SDK is not initialized.");
     }
     await teamsUserCredential.getUserInfo();
-    await teamsUserCredential!.login(["User.Read.All", "Calendars.Read.All"]);
+    const scopes = [
+      "User.Read.All",
+      "Calendars.Read.All"
+    ];
+    await teamsUserCredential!.login(scopes);
     const loginRes = "login success";
     return loginRes;
   }, { autoLoad: false });

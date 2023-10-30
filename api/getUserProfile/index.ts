@@ -37,8 +37,6 @@ export default async function run(
 
   // Prepare access token.
   const accessToken: string = teamsfxContext["AccessToken"];
-  console.log(accessToken);
-  
   if (!accessToken) {
     return {
       status: 400,
