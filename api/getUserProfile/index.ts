@@ -3,7 +3,6 @@
  * developer guide.
  */
 
-// Import polyfills for fetch required by msgraph-sdk-javascript.
 import "isomorphic-fetch";
 import { Context, HttpRequest } from "@azure/functions";
 import {
@@ -13,7 +12,8 @@ import {
 import { Client } from "@microsoft/microsoft-graph-client";
 import { TokenCredentialAuthenticationProvider } from "@microsoft/microsoft-graph-client/authProviders/azureTokenCredentials";
 import config from "../config";
-import  "./Hook";
+import "./Hook";
+import { ClientSecretCredential } from "@azure/identity";
 
 interface Response {
   status: number;
@@ -67,34 +67,51 @@ export default async function run(
       },
     };
   }
-  // Create a graph client with default scope to access user's Microsoft 365 data after user has consented.
+  const scopes = [
+    "https://graph.microsoft.com/TeamSettings.Read.All",
+    "https://graph.microsoft.com/TeamMember.Read.All"
+  ];
   try {
-    // Create an instance of the TokenCredentialAuthenticationProvider by passing the tokenCredential instance and options to the constructor
     const authProvider = new TokenCredentialAuthenticationProvider(
       oboCredential,
       {
-        scopes: ["https://graph.microsoft.com/.default"],
+        scopes,
       }
     );
-    // Initialize Graph client instance with authProvider
+    // Initialize Graph client instance with obo authProvider
     const graphClient = Client.initWithMiddleware({
+      // in mock mode, we use a mocked authProvider to replace the real authProvider
       authProvider: authProvider,
     });
-    let profile: any;
+    let joinedTeams: any;
     try {
-      profile = await graphClient.api("/me").get();
+      joinedTeams = await graphClient.api("/me/joinedTeams").get();
     } catch (error) {
-      profile = `get graph api me failed for statusCode: ${(error as any).statusCode}`;
+      joinedTeams = `get graph api me/joinedTeams failed for statusCode: ${(error as any).statusCode}`;
     }
-    res.body.graphClientMessage = profile;
+    res.body.joinedTeams = joinedTeams.value.map((team: any) => team.displayName );
 
+    // Initialize Graph client instance with application authProvider
+    const credential = new ClientSecretCredential(config.tenantId, config.clientId, config.clientSecret);
+    const applicationAuthProvider = new TokenCredentialAuthenticationProvider(credential, { scopes });
+    const applicationGraphClient = Client.initWithMiddleware({
+      // in mock mode, we use a mocked authProvider to replace the real authProvider
+      authProvider: applicationAuthProvider,
+    });
+    let teamMembers: any;
+    try {
+      teamMembers = await applicationGraphClient.api("teams/{{mocked teams}}/members").get();
+    } catch (error) {
+      teamMembers = `get graph api teams/{{teams}}/members failed for statusCode: ${(error as any).statusCode}`;
+    }
+    res.body.teamMembers = teamMembers.value.map((member: any) => member.displayName );
   } catch (e) {
     context.log.error(e);
     return {
       status: 500,
       body: {
         error:
-          "Failed to retrieve user profile from Microsoft Graph. The application may not be authorized.",
+          "Failed to retrieve information from Microsoft Graph. The application credential is invalid.",
       },
     };
   }

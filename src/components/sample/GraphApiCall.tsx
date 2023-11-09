@@ -9,7 +9,7 @@ export function GraphApiCall(props: { codePath?: string; docsUrl?: string; }) {
   const authProvider = new TokenCredentialAuthenticationProvider(
     teamsUserCredential!,
     {
-      // as the graph api is mocked, any scope is ok.
+      // as the TeamsUserCredential getToken is mocked, any scope is ok.
       scopes: ["https://graph.microsoft.com/User.Read.All"],
     }
   );

@@ -316,6 +316,141 @@
         "userPrincipalName": "AdeleV@M365x214355.onmicrosoft.com",
         "id": "87d349ed-44d7-43e1-9a83-5f2406dee5bd"
       }
+    },
+    {
+      "url": "https://graph.microsoft.com/v1.0/users/*",
+      "responseBody": {
+        "@odata.context": "https://graph.microsoft.com/v1.0/$metadata#users/$entity",
+        "businessPhones": [
+          "+1 425 555 0109"
+        ],
+        "displayName": "Adele Vance",
+        "givenName": "Adele",
+        "jobTitle": "Product Marketing Manager",
+        "mail": "AdeleV@M365x214355.onmicrosoft.com",
+        "mobilePhone": null,
+        "officeLocation": "18/2111",
+        "preferredLanguage": "en-US",
+        "surname": "Vance",
+        "userPrincipalName": "AdeleV@M365x214355.onmicrosoft.com",
+        "id": "87d349ed-44d7-43e1-9a83-5f2406dee5bd"
+      }
+    },
+    {
+      "url": "https://graph.microsoft.com/v1.0/me/joinedTeams",
+      "exampleUrl": "https://graph.microsoft.com/v1.0/me/joinedTeams",
+      "method": "GET",
+      "responseCode": 200,
+      "responseHeaders": {
+        "Content-type": "application/json"
+      },
+      "responseBody": {
+        "@odata.context": "https://graph.microsoft.com/v1.0/$metadata#teams",
+        "@odata.count": 3,
+        "value": [
+          {
+            "id": "02bd9fd6-8f93-4758-87c3-1fb73740a315",
+            "createdDateTime": null,
+            "displayName": "HR Taskforce",
+            "description": "Welcome to the HR Taskforce team.",
+            "internalId": null,
+            "classification": null,
+            "specialization": null,
+            "visibility": null,
+            "webUrl": null,
+            "isArchived": false,
+            "tenantId": "dcd219dd-bc68-4b9b-bf0b-4a33a796be35",
+            "isMembershipLimitedToOwners": null,
+            "memberSettings": null,
+            "guestSettings": null,
+            "messagingSettings": null,
+            "funSettings": null,
+            "discoverySettings": null,
+            "summary": null
+          },
+          {
+            "id": "13be6971-79db-4f33-9d41-b25589ca25af",
+            "createdDateTime": null,
+            "displayName": "Business Development",
+            "description": "Welcome to the BizDev team.",
+            "internalId": null,
+            "classification": null,
+            "specialization": null,
+            "visibility": null,
+            "webUrl": null,
+            "isArchived": false,
+            "tenantId": "dcd219dd-bc68-4b9b-bf0b-4a33a796be35",
+            "isMembershipLimitedToOwners": null,
+            "memberSettings": null,
+            "guestSettings": null,
+            "messagingSettings": null,
+            "funSettings": null,
+            "discoverySettings": null,
+            "summary": null
+          },
+          {
+            "id": "8090c93e-ba7c-433e-9f39-08c7ba07c0b3",
+            "createdDateTime": null,
+            "displayName": "X1050 Launch Team",
+            "description": "Welcome to the team that we've assembled to launch our product.",
+            "internalId": null,
+            "classification": null,
+            "specialization": null,
+            "visibility": null,
+            "webUrl": null,
+            "isArchived": false,
+            "tenantId": "dcd219dd-bc68-4b9b-bf0b-4a33a796be35",
+            "isMembershipLimitedToOwners": null,
+            "memberSettings": null,
+            "guestSettings": null,
+            "messagingSettings": null,
+            "funSettings": null,
+            "discoverySettings": null,
+            "summary": null
+          }
+        ]
+      }
+    },
+    {
+      "url": "https://graph.microsoft.com/v1.0/teams/*/members",
+      "exampleUrl": "https://graph.microsoft.com/beta/teams/ee0f5ae2-8bc6-4ae5-8466-7daeebbfa062/members",
+      "method": "GET",
+      "responseCode": 200,
+      "responseHeaders": {
+        "Content-Type": "application/json"
+      },
+      "responseBody": {
+        "@odata.context": "https://graph.microsoft.com/beta/$metadata#teams('ee0f5ae2-8bc6-4ae5-8466-7daeebbfa062')/members",
+        "@odata.count": 3,
+        "value": [
+          {
+            "@odata.type": "#microsoft.graph.aadUserConversationMember",
+            "id": "ZWUwZjVhZTItOGJjNi00YWU1LTg0NjYtN2RhZWViYmZhMDYyIyM3Mzc2MWYwNi0yYWM5LTQ2OWMtOWYxMC0yNzlhOGNjMjY3Zjk=",
+            "roles": [],
+            "displayName": "Adele Vance",
+            "userId": "73761f06-2ac9-469c-9f10-279a8cc267f9",
+            "email": "AdeleV@M365x987948.OnMicrosoft.com"
+          },
+          {
+            "@odata.type": "#microsoft.graph.aadUserConversationMember",
+            "id": "ZWUwZjVhZTItOGJjNi00YWU1LTg0NjYtN2RhZWViYmZhMDYyIyM1OThlZmNkNC1lNTQ5LTQwMmEtOTYwMi0wYjUwMjAxZmFlYmU=",
+            "roles": [
+              "owner"
+            ],
+            "displayName": "MOD Administrator",
+            "userId": "598efcd4-e549-402a-9602-0b50201faebe",
+            "email": "admin@M365x987948.OnMicrosoft.com"
+          },
+          {
+            "@odata.type": "#microsoft.graph.aadUserConversationMember",
+            "id": "MmFiOWM3OTYtMjkwMi00NWY4LWI3MTItN2M1YTYzY2Y0MWM0IyM3NTJmNTBiNy0yNTZmLTQ1MzktYjc3NS1jNGQxMmYyZTQ3MjI=",
+            "roles": [],
+            "displayName": "Harry Johnson",
+            "userId": "752f50b7-256f-4539-b775-c4d12f2e4722",
+            "email": "harry@M365x987948.OnMicrosoft.com"
+          }
+        ]
+      }
     }
   ]
 }

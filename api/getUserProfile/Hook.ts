@@ -1,6 +1,4 @@
-import { OnBehalfOfUserCredential } from "@microsoft/teamsfx";
-import { AccessToken } from "@azure/identity";
-import { Client } from "@microsoft/microsoft-graph-client";
+import { AuthenticationProvider, Client } from "@microsoft/microsoft-graph-client";
 import { HttpsProxyAgent } from "hpagent";
 import fetch from "node-fetch";
 
@@ -9,23 +7,23 @@ function shouldHook(): boolean {
 }
 
 if (shouldHook()) {
-  // hook getToken to return a mocked access token. The token can not be used to call real graph api.
-  OnBehalfOfUserCredential.prototype.getToken = async (scopes: string | string[], options?: any) => {
-    const accessToken: AccessToken = {
-      token: "mocked token",
-      expiresOnTimestamp: 2147483647,
-    };
-    return accessToken;
-  };
-
   global["fetch"] = fetch;
   const agent = new HttpsProxyAgent({
     proxy: 'http://127.0.0.1:8000',
     rejectUnauthorized: false,
   });
 
+  // replace the default auth provider with a custom mocked one in graph client, 
+  // so that we can handle application auth as well as obo auth
+  class AuthenticationProviderImpl implements AuthenticationProvider {
+    private accessToken = "mocked token";
+    public async getAccessToken(): Promise<string> {
+      return this.accessToken;
+    }
+  }
   const oldInitWithMiddleware = Client.initWithMiddleware;
   Client.initWithMiddleware = (options: any) => {
+    options.authProvider = new AuthenticationProviderImpl();
     options.fetchOptions = options.fetchOptions ?? {}
     options.fetchOptions.agent = agent;
     return oldInitWithMiddleware(options);
@@ -33,6 +31,7 @@ if (shouldHook()) {
 
   const oldInit = Client.init;
   Client.init = (options: any) => {
+    options.authProvider = new AuthenticationProviderImpl();
     options.fetchOptions = options.fetchOptions ?? {}
     options.fetchOptions.agent = agent;
     return oldInit(options);

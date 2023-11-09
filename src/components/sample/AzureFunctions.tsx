@@ -45,7 +45,8 @@ export function AzureFunctions(props: { codePath?: string; docsUrl?: string; }) 
         {`Hook the grapClient creation by adding proxy middleware:\n`}
         <code>  ProxyMiddleware("http://LOCAL_PROXY_ADDRESS")</code>
         {`\nGrpah API called in backend: \n`}
-        {`https://graph.microsoft.com/v1.0/me\n`}
+        {`https://graph.microsoft.com/v1.0/me/joinedTeams (using obo auth)\n`}
+        {`https://graph.microsoft.com/v1.0/teams/{{mocked teams}}/members (using application auth)\n`}
       </pre>
       <div className="call backend api">
         {!loading && (
