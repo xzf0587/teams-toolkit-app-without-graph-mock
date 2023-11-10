@@ -1,6 +1,46 @@
 {
   "responses": [
     {
+      "url": "https://graph.microsoft.com/v1.0/users/*/teamwork/installedApps*",
+      "exampleUrl": "https://graph.microsoft.com/v1.0/users/5b649834-7412-4cce-9e69-176e95a394f5/teamwork/installedApps?$expand=teamsAppDefinition",
+      "method": "GET",
+      "responseCode": 200,
+      "responseHeaders": {
+        "Content-type": "application/json"
+      },
+      "responseBody": {
+        "value": [
+          {
+            "id": "NjRiOWM3NDYtYjE1NS00MDQyLThkNDctOTQxYmQzODE2ODFiIyMwZDgyMGVjZC1kZWYyLTQyOTctYWRhZC03ODA1NmNkZTdjNzg=",
+            "teamsAppDefinition": {
+              "id": "MGQ4MjBlY2QtZGVmMi00Mjk3LWFkYWQtNzgwNTZjZGU3Yzc4IyMxLjAuMA==",
+              "teamsAppId": "0d820ecd-def2-4297-adad-78056cde7c78",
+              "displayName": "OneNote",
+              "version": "1.0.0"
+            }
+          },
+          {
+            "id": "NjRiOWM3NDYtYjE1NS00MDQyLThkNDctOTQxYmQzODE2ODFiIyMwZmQ5MjVhMC0zNTdmLTRkMjUtODQ1Ni1iMzAyMmFhYTQxYTk=",
+            "teamsAppDefinition": {
+              "id": "MGZkOTI1YTAtMzU3Zi00ZDI1LTg0NTYtYjMwMjJhYWE0MWE5IyMxLjc=",
+              "teamsAppId": "0fd925a0-357f-4d25-8456-b3022aaa41a9",
+              "displayName": "SurveyMonkey",
+              "version": "1.7"
+            }
+          },
+          {
+            "id": "NjRiOWM3NDYtYjE1NS00MDQyLThkNDctOTQxYmQzODE2ODFiIyMyYTUyNzcwMy0xZjZmLTQ1NTktYTMzMi1kOGE3ZDI4OGNkODg=",
+            "teamsAppDefinition": {
+              "id": "MmE1Mjc3MDMtMWY2Zi00NTU5LWEzMzItZDhhN2QyODhjZDg4IyMxLjA=",
+              "teamsAppId": "2a527703-1f6f-4559-a332-d8a7d288cd88",
+              "displayName": "SharePoint",
+              "version": "1.0"
+            }
+          }
+        ]
+      }
+    },
+    {
       "url": "https://graph.microsoft.com/v1.0/me/calendarview*",
       "method": "GET",
       "responseCode": 200,
@@ -450,6 +490,108 @@
             "email": "harry@M365x987948.OnMicrosoft.com"
           }
         ]
+      }
+    },
+    {
+      "url": "https://graph.microsoft.com/v1.0/applications/*",
+      "exampleUrl": "https://graph.microsoft.com/v1.0/applications/acc848e9-e8ec-4feb-a521-8d58b5482e09",
+      "method": "GET",
+      "responseCode": 200,
+      "responseHeaders": {
+        "Content-type": "application/json"
+      },
+      "responseBody": {
+        "@odata.context": "https://graph.microsoft.com/v1.0/$metadata#applications/$entity",
+        "id": "acc848e9-e8ec-4feb-a521-8d58b5482e09",
+        "deletedDateTime": null,
+        "appId": "05b10a2d-62db-420c-8626-55f3a5e7865b",
+        "applicationTemplateId": null,
+        "disabledByMicrosoftStatus": null,
+        "createdDateTime": "2020-02-13T21:09:15Z",
+        "displayName": "apisandboxproxy",
+        "description": null,
+        "groupMembershipClaims": null,
+        "identifierUris": [
+          "https://M365x214355.onmicrosoft.com/apisandboxproxy"
+        ],
+        "isDeviceOnlyAuthSupported": null,
+        "isFallbackPublicClient": null,
+        "notes": null,
+        "publisherDomain": "M365x214355.onmicrosoft.com",
+        "serviceManagementReference": null,
+        "signInAudience": "AzureADMyOrg",
+        "tags": [],
+        "tokenEncryptionKeyId": null,
+        "samlMetadataUrl": null,
+        "defaultRedirectUri": null,
+        "certification": null,
+        "optionalClaims": null,
+        "servicePrincipalLockConfiguration": null,
+        "requestSignatureVerification": null,
+        "addIns": [],
+        "api": {
+          "acceptMappedClaims": null,
+          "knownClientApplications": [],
+          "requestedAccessTokenVersion": null,
+          "oauth2PermissionScopes": [],
+          "preAuthorizedApplications": []
+        },
+        "appRoles": [],
+        "info": {
+          "logoUrl": null,
+          "marketingUrl": null,
+          "privacyStatementUrl": null,
+          "supportUrl": null,
+          "termsOfServiceUrl": null
+        },
+        "keyCredentials": [],
+        "parentalControlSettings": {
+          "countriesBlockedForMinors": [],
+          "legalAgeGroupRule": "Allow"
+        },
+        "passwordCredentials": [
+          {
+            "customKeyIdentifier": null,
+            "displayName": "secret",
+            "endDateTime": "2299-12-31T08:00:00Z",
+            "hint": "3/x",
+            "keyId": "331279dc-2868-4757-a744-e9649280cd4b",
+            "secretText": null,
+            "startDateTime": "2020-02-13T21:14:36.14Z"
+          }
+        ],
+        "publicClient": {
+          "redirectUris": []
+        },
+        "requiredResourceAccess": [
+          {
+            "resourceAppId": "00000003-0000-0000-c000-000000000000",
+            "resourceAccess": [
+              {
+                "id": "14dad69e-099b-42c9-810b-d002981feec1",
+                "type": "Scope"
+              }
+            ]
+          }
+        ],
+        "verifiedPublisher": {
+          "displayName": null,
+          "verifiedPublisherId": null,
+          "addedDateTime": null
+        },
+        "web": {
+          "homePageUrl": null,
+          "logoutUrl": null,
+          "redirectUris": [],
+          "implicitGrantSettings": {
+            "enableAccessTokenIssuance": false,
+            "enableIdTokenIssuance": false
+          },
+          "redirectUriSettings": []
+        },
+        "spa": {
+          "redirectUris": []
+        }
       }
     }
   ]

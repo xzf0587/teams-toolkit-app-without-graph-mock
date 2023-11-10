@@ -16,9 +16,12 @@ export function GraphApiCall(props: { codePath?: string; docsUrl?: string; }) {
   const graphClient = Client.initWithMiddleware({
     authProvider: authProvider,
   });
-  const { loading: loadingProfile, data: profileData, error: profileError, reload: reloadProfile } = useData(async () => {
-    const profile = await graphClient.api("/me").get();
-    return profile;
+  const { loading: loadingInstalledApp, data: installedAppData, error: installedAppError, reload: reloadInstalledApp } = useData(async () => {
+    let response = await graphClient.api("/users/{{mocked user id}}/teamwork/installedApps").get();
+    const res = response.value.map((item: any) => {
+        return `${item.teamsAppDefinition.displayName} v${item.teamsAppDefinition.version}`
+    });
+    return res;
   }, { autoLoad: false });
 
   const { loading: loadingCalendar, data: calendarData, error: calendarError, reload: reloadCalendar } = useData(async () => {
@@ -27,7 +30,7 @@ export function GraphApiCall(props: { codePath?: string; docsUrl?: string; }) {
   }, { autoLoad: false });
 
   const { loading: loadingPhoto, data: photoData, error: photoError, reload: reloadPhoto } = useData(async () => {
-    const photo = await graphClient.api("/users/me/photo/$value").get();
+    const photo = await graphClient.api("/users/{{mocked user id}}/photo/$value").get();
     const url = window.URL || window.webkitURL;
     return url.createObjectURL(photo);
   }, { autoLoad: false });
@@ -39,25 +42,25 @@ export function GraphApiCall(props: { codePath?: string; docsUrl?: string; }) {
         {`Use teamsUserCredential as authProvider of graph client.\n`}
         {`As the getToken method of teamsUserCredential has been hooked, there is no permission error.\n`}
         {`Call Graph API: \n`}
-        <code>{`  const result: any = await graphClient.api({URI}).get();`}</code>
+        <code>{`  const result: any = await graphClient.api([URI]).get();`}</code>
         {`\nGrpah API used: \n`}
-        {`https://graph.microsoft.com/v1.0/me\n`}
+        {`https://graph.microsoft.com/v1.0/users/*/teamwork/installedApps\n`}
         {`https://graph.microsoft.com/v1.0/me/calendarview\n`}
-        {`https://graph.microsoft.com/v1.0/users/{userId}/photo/$value`}
+        {`https://graph.microsoft.com/v1.0/users/*/photo/$value`}
       </pre>
       <div className="profile">
-        {!loadingProfile && (
-          <Button appearance="primary" disabled={loadingProfile} onClick={reloadProfile}>
-            Send Request graph.microsoft.com/v1.0/me
+        {!loadingInstalledApp && (
+          <Button appearance="primary" disabled={loadingInstalledApp} onClick={reloadInstalledApp}>
+            Send Request graph.microsoft.com/v1.0/users/[user id]/teamwork/installedApps
           </Button>
         )}
-        {loadingProfile && (
+        {loadingInstalledApp && (
           <pre className="fixed">
             <Spinner />
           </pre>
         )}
-        {!loadingProfile && !!profileData && !profileError && <pre className="fixed">{JSON.stringify(profileData, null, 2)}</pre>}
-        {!loadingProfile && !!profileError && <div className="error fixed">{`failed for statusCode: ${(profileError as any).statusCode}`}</div>}
+        {!loadingInstalledApp && !!installedAppData && !installedAppError && <pre className="fixed">{`installed app list:\n${JSON.stringify(installedAppData, null, 2)}`}</pre>}
+        {!loadingInstalledApp && !!installedAppError && <div className="error fixed">{`failed for statusCode: ${(installedAppError as any).statusCode}`}</div>}
       </div>
       <p></p>
       <div className="calendarview">
@@ -78,7 +81,7 @@ export function GraphApiCall(props: { codePath?: string; docsUrl?: string; }) {
       <div className="photo">
         {!loadingPhoto && (
           <Button appearance="primary" disabled={loadingPhoto} onClick={reloadPhoto}>
-            Send Request graph.microsoft.com/v1.0/me/photo/$value
+            Send Request graph.microsoft.com/v1.0/users/[user id]/photo/$value
           </Button>
         )}
         {loadingPhoto && (
