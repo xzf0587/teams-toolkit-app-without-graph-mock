@@ -32,6 +32,7 @@
     "build": "react-scripts build",
     "test": "echo \"Error: no test specified\" && exit 1",
     "eject": "react-scripts eject",
+    "m": "node scripts/m365proxy.js",
     "m365proxy": "cd m365proxy && m365proxy -f 0 --mocks-file responses.sample.json --watch-process-names node msedge --record --minimal-permissions-summary-file-path permission.json",
     "m365proxy:error": "cd m365proxy && m365proxy -f 100 --watch-process-names node msedge --record --minimal-permissions-summary-file-path permission.json"
   },
