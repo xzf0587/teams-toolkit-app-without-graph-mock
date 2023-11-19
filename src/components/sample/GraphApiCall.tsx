@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import { Button, Spinner } from "@fluentui/react-components";
 import { TeamsFxContext } from "../Context";
 import { Client } from "@microsoft/microsoft-graph-client";
@@ -19,14 +19,17 @@ export function GraphApiCall(props: { codePath?: string; docsUrl?: string; }) {
   const { loading: loadingInstalledApp, data: installedAppData, error: installedAppError, reload: reloadInstalledApp } = useData(async () => {
     let response = await graphClient.api("/users/{{mocked user id}}/teamwork/installedApps").get();
     const res = response.value.map((item: any) => {
-        return `${item.teamsAppDefinition.displayName} v${item.teamsAppDefinition.version}`
+      return `${item.teamsAppDefinition.displayName} v${item.teamsAppDefinition.version}`;
     });
     return res;
   }, { autoLoad: false });
 
-  const { loading: loadingCalendar, data: calendarData, error: calendarError, reload: reloadCalendar } = useData(async () => {
-    const calendarView = await graphClient.api("me/calendarview").get();
-    return calendarView;
+  const { loading: loadingGroups, data: groupsData, error: groupsError, reload: reloadGroups } = useData(async () => {
+    const calendarView = await graphClient.api("groups").get();
+    const res = calendarView.value.map((item: any) => {
+      return `${item.displayName}`;
+    });
+    return res;
   }, { autoLoad: false });
 
   const { loading: loadingPhoto, data: photoData, error: photoError, reload: reloadPhoto } = useData(async () => {
@@ -40,12 +43,12 @@ export function GraphApiCall(props: { codePath?: string; docsUrl?: string; }) {
       <pre>
         {`Call Graph API in frontend by graph client.\n`}
         {`Use teamsUserCredential as authProvider of graph client.\n`}
-        {`As the getToken method of teamsUserCredential has been hooked, there is no permission error.\n`}
+        {`As the getToken method of teamsUserCredential has been hooked, there will be no permission error.\n`}
         {`Call Graph API: \n`}
         <code>{`  const result: any = await graphClient.api([URI]).get();`}</code>
         {`\nGrpah API used: \n`}
         {`https://graph.microsoft.com/v1.0/users/*/teamwork/installedApps\n`}
-        {`https://graph.microsoft.com/v1.0/me/calendarview\n`}
+        {`https://graph.microsoft.com/v1.0/groups\n`}
         {`https://graph.microsoft.com/v1.0/users/*/photo/$value`}
       </pre>
       <div className="profile">
@@ -64,18 +67,18 @@ export function GraphApiCall(props: { codePath?: string; docsUrl?: string; }) {
       </div>
       <p></p>
       <div className="calendarview">
-        {!loadingCalendar && (
-          <Button appearance="primary" disabled={loadingCalendar} onClick={reloadCalendar}>
-            Send Request graph.microsoft.com/v1.0/me/calendarview
+        {!loadingGroups && (
+          <Button appearance="primary" disabled={loadingGroups} onClick={reloadGroups}>
+            Send Request graph.microsoft.com/v1.0/groups
           </Button>
         )}
-        {loadingCalendar && (
+        {loadingGroups && (
           <pre className="fixed">
             <Spinner />
           </pre>
         )}
-        {!loadingCalendar && !!calendarData && !calendarError && <pre className="fixed">{JSON.stringify(calendarData, null, 2)}</pre>}
-        {!loadingCalendar && !!calendarError && <div className="error fixed">{`failed for statusCode: ${(calendarError as any).statusCode}`}</div>}
+        {!loadingGroups && !!groupsData && !groupsError && <pre className="fixed">{JSON.stringify(groupsData, null, 2)}</pre>}
+        {!loadingGroups && !!groupsError && <div className="error fixed">{`failed for statusCode: ${(groupsError as any).statusCode}`}</div>}
       </div>
       <p></p>
       <div className="photo">

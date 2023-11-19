@@ -17,6 +17,7 @@ import { Publish } from "./Publish";
 import { TeamsFxContext } from "../Context";
 import { GraphApiCall } from "./GraphApiCall";
 import { Login } from "./Login";
+import { GraphToolkit } from "./GraphToolkit";
 
 export function Welcome(props: { showFunction?: boolean; environment?: string; }) {
   const { showFunction, environment } = {
@@ -61,6 +62,9 @@ export function Welcome(props: { showFunction?: boolean; environment?: string; }
             <Tab id="Publish" value="publish">
               3. Call Graph API from Azure Function
             </Tab>
+            <Tab id="Toolkit" value="toolkit">
+              4. Use Graph Toolkit
+            </Tab>
           </TabList>
           <div>
             {selectedValue === "local" && (
@@ -77,6 +81,11 @@ export function Welcome(props: { showFunction?: boolean; environment?: string; }
             {selectedValue === "publish" && (
               <div>
                 {<AzureFunctions />}
+              </div>
+            )}
+             {selectedValue === "toolkit" && (
+              <div>
+                {<GraphToolkit />}
               </div>
             )}
           </div>
