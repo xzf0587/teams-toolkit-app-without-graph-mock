@@ -80,7 +80,7 @@ export default async function run(
     );
     // Initialize Graph client instance with obo authProvider
     const graphClient = Client.initWithMiddleware({
-      // in mock mode, we use a mocked authProvider to replace the real authProvider
+      // in mock mode, use a mocked authProvider to replace the real authProvider. No user code is required to change.
       authProvider: authProvider,
     });
     let joinedTeams: any;
@@ -95,7 +95,7 @@ export default async function run(
     const credential = new ClientSecretCredential(config.tenantId, config.clientId, config.clientSecret);
     const applicationAuthProvider = new TokenCredentialAuthenticationProvider(credential, { scopes });
     const applicationGraphClient = Client.initWithMiddleware({
-      // in mock mode, we use a mocked authProvider to replace the real authProvider
+      // in mock mode, use a mocked authProvider to replace the real authProvider. No user code is required to change.
       authProvider: applicationAuthProvider,
     });
     let teamMembers: any;

@@ -25,8 +25,8 @@ export function GraphToolkit(props: { codePath?: string; docsUrl?: string; }) {
       <h2>Graph Toolkit</h2>
       <div className="my-account-area">
         <pre>
-          {`No extra code update required for Graph toolkit when using TeamsFxProvider as provider,\nsince TeamsFxProvider is constructed by teamsUserCredential\n`}
-          {`Use Person Compoent of Graph toolkit.\n`}
+          {`No extra code change is required for Graph Toolkit when using TeamsFxProvider as provider,\nsince TeamsFxProvider utilizes teamsUserCredential which has been hooked\n`}
+          {`Person Component Code of Graph Toolkit.\n`}
           <code>{`<Person`}</code><br />
           <code>{`  userId={any userId}`}</code><br />
           <code>{`  view={PersonViewType.threelines}`}</code><br />
