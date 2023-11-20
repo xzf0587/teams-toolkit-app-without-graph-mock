@@ -1,6 +1,74 @@
 {
   "responses": [
     {
+      "url": "https://graph.microsoft.com/v1.0/groups?$count=true&$filter=hasMembersWithLicenseErrors+eq+true*&$select=id,displayName",
+      "exampleUrl": "https://graph.microsoft.com/v1.0/groups?$count=true&$filter=hasMembersWithLicenseErrors+eq+true&$select=id,displayName",
+      "method": "GET",
+      "responseCode": 200,
+      "responseHeaders": {
+        "Content-type": "application/json"
+      },
+      "responseBody": {
+        "@odata.context": "https://graph.microsoft.com/v1.0/$metadata#groups(id,displayName)",
+        "@odata.count": 2,
+        "value": [
+          {
+            "id": "11111111-2222-3333-4444-555555555555",
+            "displayName": "Group 1 for request with query parameters"
+          },
+          {
+            "id": "22222222-3333-4444-5555-666666666666",
+            "displayName": "Group 2 for request with query parameters"
+          }
+        ]
+      }
+    },
+    {
+      "url": "https://graph.microsoft.com/v1.0/groups",
+      "nth": 2,
+      "method": "GET",
+      "responseCode": 200,
+      "responseHeaders": {
+        "Content-type": "application/json"
+      },
+      "responseBody": {
+        "@odata.context": "https://graph.microsoft.com/v1.0/$metadata#groups",
+        "@microsoft.graph.tips": "Use $select to choose only the properties your app needs, as this can lead to performance improvements. For example: GET groups?$select=assignedLabels,assignedLicenses",
+        "value": [
+          {
+            "id": "11111111-2222-3333-4444-555555555555",
+            "displayName": "Group 1 for 2nd request"
+          },
+          {
+            "id": "22222222-3333-4444-5555-666666666666",
+            "displayName": "Group 2 for 2nd request"
+          }
+        ]
+      }
+    },
+    {
+      "url": "https://graph.microsoft.com/v1.0/groups",
+      "method": "GET",
+      "responseCode": 200,
+      "responseHeaders": {
+        "Content-type": "application/json"
+      },
+      "responseBody": {
+        "@odata.context": "https://graph.microsoft.com/v1.0/$metadata#groups",
+        "@microsoft.graph.tips": "Use $select to choose only the properties your app needs, as this can lead to performance improvements. For example: GET groups?$select=assignedLabels,assignedLicenses",
+        "value": [
+          {
+            "id": "11111111-2222-3333-4444-555555555555",
+            "displayName": "Group 1 for default"
+          },
+          {
+            "id": "22222222-3333-4444-5555-666666666666",
+            "displayName": "Group 2 for default"
+          }
+        ]
+      }
+    },
+    {
       "url": "https://graph.microsoft.com/v1.0/users/*/teamwork/installedApps*",
       "exampleUrl": "https://graph.microsoft.com/v1.0/users/5b649834-7412-4cce-9e69-176e95a394f5/teamwork/installedApps?$expand=teamsAppDefinition",
       "method": "GET",
@@ -38,6 +106,50 @@
             }
           }
         ]
+      }
+    },
+    {
+      "url": "https://graph.microsoft.com/v1.0/me/people*",
+      "exampleUrl": "https://graph.microsoft.com/v1.0/me/people",
+      "method": "GET",
+      "responseCode": 200,
+      "responseHeaders": {
+        "Content-type": "application/json"
+      },
+      "responseBody": {
+        "@odata.context": "https://graph.microsoft.com/v1.0/$metadata#users('48d31887-5fad-4d73-a9f5-3c356e68a038')/people",
+        "value": [
+          {
+            "id": "33b43a5b-87d6-41ec-91f8-a2610048105f",
+            "displayName": "Marketing",
+            "givenName": null,
+            "surname": null,
+            "birthday": null,
+            "personNotes": null,
+            "isFavorite": false,
+            "jobTitle": null,
+            "companyName": null,
+            "yomiCompany": null,
+            "department": null,
+            "officeLocation": null,
+            "profession": null,
+            "userPrincipalName": null,
+            "imAddress": null,
+            "scoredEmailAddresses": [
+              {
+                "address": "Marketing@M365x214355.onmicrosoft.com",
+                "relevanceScore": 29,
+                "selectionLikelihood": "notSpecified"
+              }
+            ],
+            "phones": [],
+            "personType": {
+              "class": "Group",
+              "subclass": "UnifiedGroup"
+            }
+          }
+        ],
+        "@odata.nextLink": "https://graph.microsoft.com/v1.0/me/people?%24skip=0"
       }
     },
     {
@@ -340,6 +452,7 @@
     },
     {
       "url": "https://graph.microsoft.com/v1.0/users/*",
+      "method": "GET",
       "responseBody": {
         "@odata.context": "https://graph.microsoft.com/v1.0/$metadata#users/$entity",
         "businessPhones": [

@@ -23,12 +23,14 @@ export function Login(props: { codePath?: string; docsUrl?: string; }) {
     <div>
       <h2>Hook Login</h2>
       <pre>
-        {`Hook the teamsUserCredential login method. It will always return success.\n`}
-        {`Login for scopes: ["User.Read.All", "Calendars.Read.All"]`}
+        {`Hook the teamsUserCredential login and getToken method. Import the hook file in App.tsx\n`}
+        <code>TeamsUserCredential.prototype.login</code><br />
+        <code>TeamsUserCredential.prototype.getToken</code><br />
+        {`Login will always success and getToken will return a mocked token.\n`}
       </pre>
       {!loading && (
         <Button appearance="primary" disabled={loading} onClick={reload}>
-          Login
+          Login for scopes: ["User.Read.All", "Calendars.Read.All"]
         </Button>
       )}
       {loading && (

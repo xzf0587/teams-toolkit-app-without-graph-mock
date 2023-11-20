@@ -7,7 +7,9 @@
   "private": true,
   "dependencies": {
     "@fluentui/react-components": "^9.18.0",
-    "@microsoft/mgt-react": "^3.1.3",
+    "@microsoft/mgt": "^2.8.0",
+    "@microsoft/mgt-react": "^2.8.0",
+    "@microsoft/mgt-teamsfx-provider": "^2.8.0",
     "@microsoft/teams-js": "^2.15.0",
     "@microsoft/teamsfx": "^2.2.0",
     "@microsoft/teamsfx-react": "^3.0.0",
@@ -33,8 +35,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "eject": "react-scripts eject",
     "m": "node scripts/m365proxy.js",
-    "m365proxy": "cd m365proxy && m365proxy -f 0 --mocks-file responses.sample.json --watch-process-names node msedge --record --minimal-permissions-summary-file-path permission.json",
-    "m365proxy:error": "cd m365proxy && m365proxy -f 100 --watch-process-names node msedge --record --minimal-permissions-summary-file-path permission.json"
+    "m365proxy": "cd m365proxy && rm -f permission.json && m365proxy -f 0 --mocks-file responses.sample.json --watch-process-names node msedge --record --minimal-permissions-summary-file-path permission.json",
+    "m365proxy:error": "cd m365proxy && rm -f permission.json && m365proxy -f 100 --watch-process-names node msedge --record --minimal-permissions-summary-file-path permission.json"
   },
   "eslintConfig": {
     "extends": [

@@ -42,8 +42,7 @@ export function AzureFunctions(props: { codePath?: string; docsUrl?: string; }) 
       <h2>Call GraphApi from Azure Function</h2>
       <pre>
         {`Call Backend API from frontend using: const apiClient = createApiClient().\n`}
-        {`Hook the grapClient creation by adding proxy middleware:\n`}
-        <code>  ProxyMiddleware("http://LOCAL_PROXY_ADDRESS")</code>
+        {`Hook the grapClient creation in backend by setting fetchOptions.agent \n    HttpsProxyAgent([M365 prxoy listening address]):\nImport the hook file in index.ts.\n`}
         {`\nGrpah API called in backend: \n`}
         {`https://graph.microsoft.com/v1.0/me/joinedTeams (using obo auth)\n`}
         {`https://graph.microsoft.com/v1.0/teams/{{mocked teams}}/members (using application auth)\n`}
