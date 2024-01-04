@@ -12,7 +12,6 @@ export function Login(props: { codePath?: string; docsUrl?: string; }) {
     await teamsUserCredential.getUserInfo();
     const scopes = [
       "User.Read.All",
-      "Calendars.Read.All"
     ];
     await teamsUserCredential!.login(scopes);
     const loginRes = "login success";
@@ -30,7 +29,7 @@ export function Login(props: { codePath?: string; docsUrl?: string; }) {
       </pre>
       {!loading && (
         <Button appearance="primary" disabled={loading} onClick={reload}>
-          Login for scopes: ["User.Read.All", "Calendars.Read.All"]
+          Login for scopes: ["User.Read.All"]
         </Button>
       )}
       {loading && (

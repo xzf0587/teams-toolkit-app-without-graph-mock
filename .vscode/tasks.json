@@ -15,6 +15,17 @@
       "dependsOrder": "sequence"
     },
     {
+      "label": "Start Teams App Locally with proxy",
+      "dependsOn": [
+        "Validate prerequisites",
+        "Provision",
+        "Deploy",
+        "Start application with hook",
+        "Run m365 proxy"
+      ],
+      "dependsOrder": "sequence"
+    },
+    {
       "label": "Validate prerequisites",
       "type": "teamsfx",
       "command": "debug-check-prerequisites",
@@ -41,7 +52,11 @@
     },
     {
       "label": "Start application",
-      "dependsOn": ["Start frontend", "Start backend", "Run m365 proxy"]
+      "dependsOn": ["Start frontend", "Start backend"]
+    },
+    {
+      "label": "Start application with hook",
+      "dependsOn": ["Start frontend with hook", "Start backend with hook"]
     },
     {
       "label": "Start frontend",
@@ -69,6 +84,64 @@
       "label": "Start backend",
       "type": "shell",
       "command": "npm run dev:teamsfx",
+      "isBackground": true,
+      "options": {
+        "cwd": "${workspaceFolder}/api",
+        "env": {
+          "PATH": "${workspaceFolder}/devTools/func:${env:PATH}"
+        }
+      },
+      "windows": {
+        "options": {
+          "env": {
+            "PATH": "${workspaceFolder}/devTools/func;${env:PATH}"
+          }
+        }
+      },
+      "problemMatcher": {
+        "pattern": {
+          "regexp": "^.*$",
+          "file": 0,
+          "location": 1,
+          "message": 2
+        },
+        "background": {
+          "activeOnStart": true,
+          "beginsPattern": "^.*(Job host stopped|signaling restart).*$",
+          "endsPattern": "^.*(Worker process started and initialized|Host lock lease acquired by instance ID).*$"
+        }
+      },
+      "presentation": {
+        "reveal": "silent"
+      },
+      "dependsOn": "Watch backend"
+    },
+    {
+      "label": "Start frontend with hook",
+      "type": "shell",
+      "command": "npm run dev:teamsfx_hook",
+      "isBackground": true,
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "problemMatcher": {
+        "pattern": {
+          "regexp": "^.*$",
+          "file": 0,
+          "location": 1,
+          "message": 2
+        },
+        "background": {
+          "activeOnStart": true,
+          "beginsPattern": ".*",
+          "endsPattern": "Compiled|Failed|compiled|failed"
+        }
+      }
+    },
+    {
+      "label": "Start backend with hook",
+      "type": "shell",
+      "command": "npm run dev:teamsfx_hook",
       "isBackground": true,
       "options": {
         "cwd": "${workspaceFolder}/api",
