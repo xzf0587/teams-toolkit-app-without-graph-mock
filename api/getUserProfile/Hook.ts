@@ -2,14 +2,14 @@ import { AuthenticationProvider, Client } from "@microsoft/microsoft-graph-clien
 import { HttpsProxyAgent } from "hpagent";
 import fetch from "node-fetch";
 
-function shouldHook(): boolean {
+export function shouldHook(): boolean {
   return process.env.HOOK_GRAPH === "true";
 }
 
 if (shouldHook()) {
   global["fetch"] = fetch;
   const agent = new HttpsProxyAgent({
-    proxy: 'http://127.0.0.1:8000',
+    proxy: 'http://127.0.0.1:8000', // replace with custom proxy port if needed
     rejectUnauthorized: false,
   });
 

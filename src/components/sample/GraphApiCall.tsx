@@ -4,7 +4,10 @@ import { TeamsFxContext } from "../Context";
 import { Client } from "@microsoft/microsoft-graph-client";
 import { TokenCredentialAuthenticationProvider } from "@microsoft/microsoft-graph-client/authProviders/azureTokenCredentials";
 import { useData } from "@microsoft/teamsfx-react";
+import { shouldHook } from "../Hook";
 export function GraphApiCall(props: { codePath?: string; docsUrl?: string; }) {
+  let teamsId: string;
+  let channelId: string;
   const teamsUserCredential = useContext(TeamsFxContext).teamsUserCredential;
   const authProvider = new TokenCredentialAuthenticationProvider(
     teamsUserCredential!,
@@ -16,36 +19,44 @@ export function GraphApiCall(props: { codePath?: string; docsUrl?: string; }) {
   const graphClient = Client.initWithMiddleware({
     authProvider: authProvider,
   });
-  const { loading: loadingInstalledApp, data: installedAppData, error: installedAppError, reload: reloadInstalledApp } = useData(async () => {
-    let response = await graphClient.api("/users/{{mocked user id}}/teamwork/installedApps").get();
+  const { loading: loadingMessages, data: messagesData, error: messagesError, reload: reloadMessages } = useData(async () => {
+    if (!teamsId) {
+      const teamsResponse = await graphClient.api("me/joinedTeams").get();
+      teamsId = teamsResponse.value[0].id;
+    }
+    if (!channelId) {
+      const channelResponse = await graphClient.api(`teams/${teamsId}/channels`).get();
+      channelId = channelResponse.value[0].id;
+    }
+    let response = await graphClient.api(`teams/${teamsId}/channels/${channelId}/messages`).version("beta").get();
     const res = response.value.map((item: any) => {
-      return `${item.teamsAppDefinition.displayName} v${item.teamsAppDefinition.version}`;
+      return item.body.content;
     });
-    return res;
+    return res.slice(0, 3);
   }, { autoLoad: false });
 
-  const { loading: loadingGroups, data: groupsData, error: groupsError, reload: reloadGroups } = useData(async () => {
-    const calendarView = await graphClient.api("groups").get();
-    const res = calendarView.value.map((item: any) => {
+  const { loading: loadingTeams, data: teamsData, error: teamsError, reload: reloadTeams } = useData(async () => {
+    const response = await graphClient.api("me/joinedTeams").get();
+    const res = response.value.map((item: any) => {
       return `${item.displayName}`;
     });
     return res;
   }, { autoLoad: false });
 
   const { loading: loadingQueryString, data: queryStringData, error: queryStringError, reload: reloadQueryString } = useData(async () => {
-    const calendarView = await graphClient.api("groups").query({
+    const groups = await graphClient.api("groups").query({
       $count: "true",
-      $filter: "hasMembersWithLicenseErrors+eq+true",
+      $filter: "startswith(displayName, 'zhao')",
       $select: "id,displayName",
     }).get();
-    const res = calendarView.value.map((item: any) => {
+    const res = groups.value.map((item: any) => {
       return `${item.displayName}`;
     });
     return res;
   }, { autoLoad: false });
 
   const { loading: loadingPhoto, data: photoData, error: photoError, reload: reloadPhoto } = useData(async () => {
-    const photo = await graphClient.api("/users/{{mocked user id}}/photo/$value").get();
+    const photo = await graphClient.api(`me/photo/$value`).get();
     const url = window.URL || window.webkitURL;
     return url.createObjectURL(photo);
   }, { autoLoad: false });
@@ -56,52 +67,59 @@ export function GraphApiCall(props: { codePath?: string; docsUrl?: string; }) {
         {`Call Graph API in frontend by graph client.\n`}
         {`Use teamsUserCredential as authProvider of graph client.\n`}
         <code>{`  const graphClient = Client.initWithMiddleware({ authProvider });`}</code>
-        {`\nAs the getToken method of teamsUserCredential has been hooked, there will be no permission error.\n`}
         {`Call Graph API: \n`}
         <code>{`  const result: any = await graphClient.api([URI]).get();`}</code>
         {`\nGrpah API used: \n`}
-        {`https://graph.microsoft.com/v1.0/users/*/teamwork/installedApps\n`}
+        {`https://graph.microsoft.com/beta/teams/*/channels/*/messages\n`}
+        {`https://graph.microsoft.com/v1.0/me/joinedTeams"\n`}
         {`https://graph.microsoft.com/v1.0/groups\n`}
-        {`https://graph.microsoft.com/v1.0/users/*/photo/$value`}
+        {`https://graph.microsoft.com/v1.0/me/photo/$value`}
       </pre>
+      {!shouldHook() && (<div>
+        <h2>Hook Mode</h2>
+        <pre>
+          {`1. Graph request will always acquire mocked token in hook mode.\n`}
+          {`2. Graph request will be sent to system https proxy(if existing) in browser by default.\n   No code change is needed.\n`}
+        </pre>
+      </div>)}
       <div className="profile">
-        {!loadingInstalledApp && (
-          <Button appearance="primary" disabled={loadingInstalledApp} onClick={reloadInstalledApp}>
-            Send Request graph.microsoft.com/v1.0/users/[user id]/teamwork/installedApps
+        {!loadingMessages && (
+          <Button appearance="primary" disabled={loadingMessages} onClick={reloadMessages}>
+            Get graph.microsoft.com/beta/teams/[teams id]/channels/[channel id]/messages
           </Button>
         )}
-        {loadingInstalledApp && (
+        {loadingMessages && (
           <pre className="fixed">
             <Spinner />
           </pre>
         )}
-        {!loadingInstalledApp && !!installedAppData && !installedAppError && <pre className="fixed">{`installed app list:\n${JSON.stringify(installedAppData, null, 2)}`}</pre>}
-        {!loadingInstalledApp && !!installedAppError && <div className="error fixed">{`failed for statusCode: ${(installedAppError as any).statusCode}`}</div>}
+        {!loadingMessages && !!messagesData && !messagesError && <pre className="fixed">{`channel messages:\n${JSON.stringify(messagesData, null, 2)}`}</pre>}
+        {!loadingMessages && !!messagesError && <div className="error fixed">{`failed for statusCode: ${(messagesError as any).statusCode}`}</div>}
       </div>
       <p></p>
-      <div className="group">
-        {!loadingGroups && (
-          <div>
-            <Button appearance="primary" disabled={loadingGroups} onClick={reloadGroups}>
-              Send Request graph.microsoft.com/v1.0/groups
+      <div className="teams">
+        {!loadingTeams && (
+            <Button appearance="primary" disabled={loadingTeams} onClick={reloadTeams}>
+              Get graph.microsoft.com/v1.0/me/joinedTeams
             </Button>
-            &nbsp;&nbsp;<span>(The second request will has a different response)</span>
-          </div>
         )}
-        {loadingGroups && (
+        {!loadingTeams && shouldHook() && (
+           <span>&nbsp;&nbsp;(The second request is different as the proxy configured)</span>
+        )}
+        {loadingTeams && (
           <pre className="fixed">
             <Spinner />
           </pre>
         )}
-        {!loadingGroups && !!groupsData && !groupsError && <pre className="fixed">{`group list in organization:\n${JSON.stringify(groupsData, null, 2)}`}</pre>}
-        {!loadingGroups && !!groupsError && <div className="error fixed">{`failed for statusCode: ${(groupsError as any).statusCode}`}</div>}
+        {!loadingTeams && !!teamsData && !teamsError && <pre className="fixed">{`joinedTeams list:\n${JSON.stringify(teamsData, null, 2)}`}</pre>}
+        {!loadingTeams && !!teamsError && <div className="error fixed">{`failed for statusCode: ${(teamsError as any).statusCode}`}</div>}
       </div>
       <p></p>
       <div className="query string">
         {!loadingQueryString && (
           <div>
             <Button appearance="primary" disabled={loadingQueryString} onClick={reloadQueryString}>
-              Send Request graph.microsoft.com/v1.0/groups with query string $filter and $select
+              Get graph.microsoft.com/v1.0/groups with query string $filter and $select
             </Button>
           </div>
         )}
@@ -117,7 +135,7 @@ export function GraphApiCall(props: { codePath?: string; docsUrl?: string; }) {
       <div className="photo">
         {!loadingPhoto && (
           <Button appearance="primary" disabled={loadingPhoto} onClick={reloadPhoto}>
-            Send Request graph.microsoft.com/v1.0/users/[user id]/photo/$value
+            Get graph.microsoft.com/v1.0/me/photo/$value
           </Button>
         )}
         {loadingPhoto && (

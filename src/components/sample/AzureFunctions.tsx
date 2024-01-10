@@ -5,6 +5,7 @@ import { BearerTokenAuthProvider, createApiClient, TeamsUserCredential } from "@
 import { TeamsFxContext } from "../Context";
 import config from "./lib/config";
 import { useData } from "@microsoft/teamsfx-react";
+import { shouldHook } from "../Hook";
 
 const functionName = config.apiName || "myFunc";
 async function callFunction(teamsUserCredential: TeamsUserCredential) {
@@ -41,12 +42,20 @@ export function AzureFunctions(props: { codePath?: string; docsUrl?: string; }) 
     <div>
       <h2>Call GraphApi from Azure Function</h2>
       <pre>
-        {`Call Backend API from frontend using: const apiClient = createApiClient().\n`}
-        {`Hook the grapClient creation in backend by setting fetchOptions.agent \n    HttpsProxyAgent([M365 prxoy listening address]):\nImport the hook file in index.ts.\n`}
-        {`\nGrpah API called in backend: \n`}
+        {`Grpah API called in backend: \n`}
         {`https://graph.microsoft.com/v1.0/me/joinedTeams (using obo auth)\n`}
-        {`https://graph.microsoft.com/v1.0/teams/{{mocked teams}}/members (using application auth)\n`}
+        {shouldHook() && (`https://graph.microsoft.com/v1.0/teams/*/members (using application auth)\n`)}
       </pre>
+      {shouldHook() && (<div>
+        <h2>Hook Mode</h2>
+        <pre>
+          {`1. Graph request will always acquire mocked token in hook mode.\n`}
+          {`2. Code change is needed for sending the Graph request to the proxy.\n`}
+        </pre>
+        {/* <pre>
+          {`Hook the grapClient creation in backend by setting fetchOptions.agent \n    HttpsProxyAgent([M365 prxoy listening address]):\nImport the hook file in index.ts.\n`}
+        </pre> */}
+      </div>)}
       <div className="call backend api">
         {!loading && (
           <Button appearance="primary" disabled={loading} onClick={reload}>

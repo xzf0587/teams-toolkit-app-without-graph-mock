@@ -1,7 +1,7 @@
 import { TeamsUserCredential } from "@microsoft/teamsfx";
 import { AccessToken } from "@azure/identity";
 import { Client } from "@microsoft/microsoft-graph-client";
-function shouldHook(): boolean {
+export function shouldHook(): boolean {
   return process.env.REACT_APP_HOOK_GRAPH === "true";
 }
 

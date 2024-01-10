@@ -14,6 +14,7 @@ import { TokenCredentialAuthenticationProvider } from "@microsoft/microsoft-grap
 import config from "../config";
 import "./Hook";
 import { ClientSecretCredential } from "@azure/identity";
+import { shouldHook } from "./Hook";
 
 interface Response {
   status: number;
@@ -89,7 +90,7 @@ export default async function run(
     } catch (error) {
       joinedTeams = `get graph api me/joinedTeams failed for statusCode: ${(error as any).statusCode}`;
     }
-    res.body.joinedTeams = joinedTeams.value.map((team: any) => team.displayName );
+    res.body.joinedTeams = joinedTeams.value.map((team: any) => team.displayName);
 
     // Initialize Graph client instance with application authProvider
     const credential = new ClientSecretCredential(config.tenantId, config.clientId, config.clientSecret);
@@ -98,13 +99,15 @@ export default async function run(
       // in mock mode, use a mocked authProvider to replace the real authProvider. No user code is required to change.
       authProvider: applicationAuthProvider,
     });
-    let teamMembers: any;
-    try {
-      teamMembers = await applicationGraphClient.api("teams/{{mocked teams}}/members").get();
-    } catch (error) {
-      teamMembers = `get graph api teams/{{teams}}/members failed for statusCode: ${(error as any).statusCode}`;
+    if (shouldHook()) {
+      let teamMembers: any;
+      try {
+        teamMembers = await applicationGraphClient.api(`teams/{{mocked teams}}/members`).get();
+      } catch (error) {
+        teamMembers = `get graph api teams/{{teams}}/members failed for statusCode: ${(error as any).statusCode}`;
+      }
+      res.body.teamMembers = teamMembers.value.map((member: any) => member.displayName);
     }
-    res.body.teamMembers = teamMembers.value.map((member: any) => member.displayName );
   } catch (e) {
     context.log.error(e);
     return {
