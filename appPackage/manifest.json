@@ -15,12 +15,12 @@
         "outline": "outline.png"
     },
     "name": {
-        "short": "tab-with-backend-${{TEAMSFX_ENV}}",
-        "full": "Full name for hello-world-tab-with-backend"
+        "short": "proxy demo",
+        "full": "Full name for proxy demo"
     },
     "description": {
-        "short": "Short description of hello-world-tab-with-backend",
-        "full": "Full description of hello-world-tab-with-backend"
+        "short": "Short description of proxy demo",
+        "full": "Full description of proxy demo"
     },
     "accentColor": "#FFFFFF",
     "bots": [],

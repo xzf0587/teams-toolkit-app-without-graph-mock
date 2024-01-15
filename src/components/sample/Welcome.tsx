@@ -8,12 +8,8 @@ import {
   TabValue,
 } from "@fluentui/react-components";
 import "./Welcome.css";
-import { EditCode } from "./EditCode";
 import { AzureFunctions } from "./AzureFunctions";
-import { CurrentUser } from "./CurrentUser";
 import { useData } from "@microsoft/teamsfx-react";
-import { Deploy } from "./Deploy";
-import { Publish } from "./Publish";
 import { TeamsFxContext } from "../Context";
 import { GraphApiCall } from "./GraphApiCall";
 import { Login } from "./Login";

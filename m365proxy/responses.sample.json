@@ -1,7 +1,7 @@
 {
   "responses": [
     {
-      "url": "https://graph.microsoft.com/v1.0/groups?$count=true&$filter=hasMembersWithLicenseErrors+eq+true*&$select=id,displayName",
+      "url": "https://graph.microsoft.com/v1.0/groups?$count=true&$filter=*&$select=id,displayName",
       "exampleUrl": "https://graph.microsoft.com/v1.0/groups?$count=true&$filter=hasMembersWithLicenseErrors+eq+true&$select=id,displayName",
       "method": "GET",
       "responseCode": 200,
@@ -64,6 +64,31 @@
           {
             "id": "22222222-3333-4444-5555-666666666666",
             "displayName": "Group 2 for default"
+          }
+        ]
+      }
+    },
+    {
+      "url": "https://graph.microsoft.com/beta/teams/*/channels/*/messages",
+      "exampleUrl": "https://graph.microsoft.com/beta/teams/*/channels/*/messages",
+      "method": "GET",
+      "responseCode": 200,
+      "responseHeaders": {
+        "Content-type": "application/json"
+      },
+      "responseBody": {
+        "@odata.context": "https://graph.microsoft.com/v1.0/$metadata#teams",
+        "@odata.count": 3,
+        "value": [
+          {
+            "body": {
+              "content": "mocked channel message 1"
+            }
+          },
+          {
+            "body": {
+              "content": "mocked channel message 2"
+            }
           }
         ]
       }
@@ -492,6 +517,7 @@
     {
       "url": "https://graph.microsoft.com/v1.0/me/joinedTeams",
       "exampleUrl": "https://graph.microsoft.com/v1.0/me/joinedTeams",
+      "nth": 2,
       "method": "GET",
       "responseCode": 200,
       "responseHeaders": {
@@ -503,63 +529,42 @@
         "value": [
           {
             "id": "02bd9fd6-8f93-4758-87c3-1fb73740a315",
-            "createdDateTime": null,
+            "displayName": "Teams Name for second call",
+            "description": "Teams Name for second call",
+            "tenantId": "dcd219dd-bc68-4b9b-bf0b-4a33a796be35"
+          }
+        ]
+      }
+    },
+    {
+      "url": "https://graph.microsoft.com/v1.0/me/joinedTeams",
+      "exampleUrl": "https://graph.microsoft.com/v1.0/me/joinedTeams",
+      "method": "GET",
+      "responseCode": 200,
+      "responseHeaders": {
+        "Content-type": "application/json"
+      },
+      "responseBody": {
+        "@odata.context": "https://graph.microsoft.com/v1.0/$metadata#teams",
+        "@odata.count": 3,
+        "value": [
+          {
+            "id": "02bd9fd6-8f93-4758-87c3-1fb73740a315",
             "displayName": "HR Taskforce",
             "description": "Welcome to the HR Taskforce team.",
-            "internalId": null,
-            "classification": null,
-            "specialization": null,
-            "visibility": null,
-            "webUrl": null,
-            "isArchived": false,
-            "tenantId": "dcd219dd-bc68-4b9b-bf0b-4a33a796be35",
-            "isMembershipLimitedToOwners": null,
-            "memberSettings": null,
-            "guestSettings": null,
-            "messagingSettings": null,
-            "funSettings": null,
-            "discoverySettings": null,
-            "summary": null
+            "tenantId": "dcd219dd-bc68-4b9b-bf0b-4a33a796be35"
           },
           {
             "id": "13be6971-79db-4f33-9d41-b25589ca25af",
-            "createdDateTime": null,
             "displayName": "Business Development",
             "description": "Welcome to the BizDev team.",
-            "internalId": null,
-            "classification": null,
-            "specialization": null,
-            "visibility": null,
-            "webUrl": null,
-            "isArchived": false,
-            "tenantId": "dcd219dd-bc68-4b9b-bf0b-4a33a796be35",
-            "isMembershipLimitedToOwners": null,
-            "memberSettings": null,
-            "guestSettings": null,
-            "messagingSettings": null,
-            "funSettings": null,
-            "discoverySettings": null,
-            "summary": null
+            "tenantId": "dcd219dd-bc68-4b9b-bf0b-4a33a796be35"
           },
           {
             "id": "8090c93e-ba7c-433e-9f39-08c7ba07c0b3",
-            "createdDateTime": null,
             "displayName": "X1050 Launch Team",
             "description": "Welcome to the team that we've assembled to launch our product.",
-            "internalId": null,
-            "classification": null,
-            "specialization": null,
-            "visibility": null,
-            "webUrl": null,
-            "isArchived": false,
-            "tenantId": "dcd219dd-bc68-4b9b-bf0b-4a33a796be35",
-            "isMembershipLimitedToOwners": null,
-            "memberSettings": null,
-            "guestSettings": null,
-            "messagingSettings": null,
-            "funSettings": null,
-            "discoverySettings": null,
-            "summary": null
+            "tenantId": "dcd219dd-bc68-4b9b-bf0b-4a33a796be35"
           }
         ]
       }

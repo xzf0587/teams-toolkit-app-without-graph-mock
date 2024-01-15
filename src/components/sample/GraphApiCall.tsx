@@ -20,15 +20,15 @@ export function GraphApiCall(props: { codePath?: string; docsUrl?: string; }) {
     authProvider: authProvider,
   });
   const { loading: loadingMessages, data: messagesData, error: messagesError, reload: reloadMessages } = useData(async () => {
-    if (!teamsId) {
+    if (!teamsId && !shouldHook()) {
       const teamsResponse = await graphClient.api("me/joinedTeams").get();
       teamsId = teamsResponse.value[0].id;
     }
-    if (!channelId) {
+    if (!channelId && !shouldHook()) {
       const channelResponse = await graphClient.api(`teams/${teamsId}/channels`).get();
       channelId = channelResponse.value[0].id;
     }
-    let response = await graphClient.api(`teams/${teamsId}/channels/${channelId}/messages`).version("beta").get();
+    let response = await graphClient.api(`teams/${teamsId ?? '1'}/channels/${channelId ?? '1'}/messages`).version("beta").get();
     const res = response.value.map((item: any) => {
       return item.body.content;
     });
@@ -72,10 +72,10 @@ export function GraphApiCall(props: { codePath?: string; docsUrl?: string; }) {
         {`\nGrpah API used: \n`}
         {`https://graph.microsoft.com/beta/teams/*/channels/*/messages\n`}
         {`https://graph.microsoft.com/v1.0/me/joinedTeams"\n`}
-        {`https://graph.microsoft.com/v1.0/groups\n`}
+        {`https://graph.microsoft.com/v1.0/groups?$count=true&$filter=*&$select=id,displayName\n`}
         {`https://graph.microsoft.com/v1.0/me/photo/$value`}
       </pre>
-      {!shouldHook() && (<div>
+      {shouldHook() && (<div>
         <h2>Hook Mode</h2>
         <pre>
           {`1. Graph request will always acquire mocked token in hook mode.\n`}
